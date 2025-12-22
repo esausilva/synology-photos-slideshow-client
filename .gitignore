@@ -1,0 +1,9 @@
+.idea/
+.tanstack/
+.DS_Store
+.cache
+.env
+node_modules/
+/build/
+/api/
+/server/build
