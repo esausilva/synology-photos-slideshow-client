@@ -1,7 +1,12 @@
 // src/routes/__root.tsx
 /// <reference types="vite/client" />
 
-import { createRootRoute, HeadContent, Outlet } from '@tanstack/react-router';
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import type { ReactNode } from 'react';
 
@@ -64,6 +69,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <body>
         {children}
         <TanStackRouterDevtools position="bottom-right" />
+        <Scripts />
       </body>
     </html>
   );

@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 vite dev",
     "build": "vite build"
   },
   "keywords": [],
