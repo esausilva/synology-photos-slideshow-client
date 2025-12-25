@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { HOME } from '~/constants/routes';
+import { WEB_HOME } from '~/constants/routes';
 import { getSlides } from '~/server-functions';
 
 import styles from '../styles/index.module.css';
 
-export const Route = createFileRoute(HOME)({
+export const Route = createFileRoute(WEB_HOME)({
   component: Home,
   loader: async () => await getSlides(),
 });

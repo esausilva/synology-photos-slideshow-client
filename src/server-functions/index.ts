@@ -1,10 +1,11 @@
 import { createServerFn } from '@tanstack/react-start';
+import { API_GET_SLIDES } from '~/constants/routes';
 
 const getSlides = createServerFn({
   method: 'GET',
 }).handler(async () => {
   const slideshowApiBaseUrl = process.env.SLIDESHOW_API_BASE_URL;
-  const res = await fetch(`${slideshowApiBaseUrl}/get-photo-urls`);
+  const res = await fetch(`${slideshowApiBaseUrl}${API_GET_SLIDES}`);
 
   if (!res.ok) {
     throw new Error('Failed to fetch slides');
