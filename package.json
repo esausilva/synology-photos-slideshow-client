@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 vite dev",
-    "build": "vite build"
+    "build": "vite build && tsc --noEmit",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
@@ -25,8 +26,11 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",
+    "browserslist": "^4.28.1",
+    "lightningcss": "^1.30.2",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
+    "vite-css-modules": "^1.12.0",
     "vite-tsconfig-paths": "^6.0.3"
   }
 }
