@@ -9,6 +9,10 @@
   font-size: 1.2rem;
 }
 
+.hidden {
+  display: none;
+}
+
 .form {
   background: #ffffff;
   border: 1px solid #8a8a8a;

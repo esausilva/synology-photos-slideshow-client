@@ -4,13 +4,13 @@ import styles from './Slideshow.module.css';
 
 interface SlideshowProps {
   slides: string[];
-  slideDelayInMs?: number;
+  intervalInMs?: number;
   random?: boolean;
 }
 
 export function Slideshow({
   slides,
-  slideDelayInMs = 20000,
+  intervalInMs = 20000,
   random = false,
 }: SlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,9 +37,9 @@ export function Slideshow({
   }, [slides.length]);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, slideDelayInMs);
+    const interval = setInterval(nextSlide, intervalInMs);
     return () => clearInterval(interval);
-  }, [nextSlide, slideDelayInMs]);
+  }, [nextSlide, intervalInMs]);
 
   if (!slides || slides.length === 0) {
     return null;

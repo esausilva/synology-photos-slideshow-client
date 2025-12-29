@@ -11,5 +11,5 @@ export const Route = createFileRoute(WEB_HOME)({
 function Home() {
   const slides = Route.useLoaderData();
 
-  return <Slideshow slides={slides} slideDelayInMs={5000} random={true} />;
+  return <Slideshow slides={slides} intervalInMs={5000} random={true} />;
 }
