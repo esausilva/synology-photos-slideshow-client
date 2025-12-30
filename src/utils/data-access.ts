@@ -12,6 +12,15 @@ interface SlideshowSettingsRecord extends SlideshowSettings {
   id: number;
 }
 
+export const seedSettings: SlideshowSettings = {
+  random: true,
+  intervalInMs: 20000,
+};
+
+export const initializeDb: () => Promise<void> = async () => {
+  await upsertSlideshowSettings(seedSettings);
+};
+
 function openIndexedDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);

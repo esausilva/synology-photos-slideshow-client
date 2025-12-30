@@ -5,7 +5,9 @@ import { WEB_SETTINGS } from '~/constants/routes';
 import styles from '~/routes/styles/settings.module.css';
 import {
   getSlideshowSettings,
+  initializeDb,
   type SlideshowSettings,
+  seedSettings,
   upsertSlideshowSettings,
 } from '~/utils/data-access';
 
@@ -21,17 +23,8 @@ interface FormState {
 
 const initialState: FormState = {
   isLoading: true,
-  random: true,
-  intervalInSeconds: 20,
-};
-
-const persistSettings = async (state: FormState) => {
-  const slideshowSettings: SlideshowSettings = {
-    random: state.random,
-    intervalInMs: state.intervalInSeconds * 1000,
-  };
-
-  await upsertSlideshowSettings(slideshowSettings);
+  random: seedSettings.random,
+  intervalInSeconds: seedSettings.intervalInMs / 1000,
 };
 
 function Settings() {
@@ -39,20 +32,19 @@ function Settings() {
 
   useEffect(() => {
     getSlideshowSettings()
-      .then((data) => {
-        if (data) {
+      .then((settings) => {
+        if (settings) {
           setFormState({
             isLoading: false,
-            random: data.random,
-            intervalInSeconds: data.intervalInMs / 1000,
+            random: settings.random,
+            intervalInSeconds: settings.intervalInMs / 1000,
           });
         } else {
-          persistSettings(initialState)
-            .then(() => {
-              setFormState({ ...initialState, isLoading: false });
-              console.log('Initial settings saved successfully');
-            })
-            .catch((err) => console.error('Failed to save settings:', err));
+          initializeDb()
+            .then(() => setFormState({ ...initialState, isLoading: false }))
+            .catch((error) => {
+              console.error('Error initializing slideshow settings: ', error);
+            });
         }
       })
       .catch((err) => console.error('Failed to load settings:', err));
@@ -107,3 +99,12 @@ function Settings() {
     </div>
   );
 }
+
+const persistSettings = async (state: FormState) => {
+  const slideshowSettings: SlideshowSettings = {
+    random: state.random,
+    intervalInMs: state.intervalInSeconds * 1000,
+  };
+
+  await upsertSlideshowSettings(slideshowSettings);
+};
