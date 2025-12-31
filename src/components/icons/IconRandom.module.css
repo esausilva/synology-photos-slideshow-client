@@ -1,0 +1,8 @@
+.random-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+
+  path {
+    stroke: #000000;
+  }
+}

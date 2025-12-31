@@ -16,7 +16,7 @@
 .form {
   background: #ffffff;
   border: 1px solid #8a8a8a;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
   padding: 1.2rem;
 
   h1 {
@@ -26,7 +26,7 @@
 
   .form-group {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.3rem 1fr 1fr;
     gap: 0.8rem;
     justify-items: start;
     align-items: center;

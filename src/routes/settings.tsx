@@ -2,6 +2,8 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import type * as React from 'react';
 import { useEffect, useState } from 'react';
 import { IconHome } from '~/components/icons/IconHome';
+import { IconInterval } from '~/components/icons/IconInterval';
+import { IconRandom } from '~/components/icons/IconRandom';
 import { WEB_SETTINGS } from '~/constants/routes';
 import styles from '~/routes/styles/settings.module.css';
 import {
@@ -77,6 +79,7 @@ function Settings() {
       <form className={formState.isLoading ? styles.hidden : styles.form}>
         <h1>Slideshow Settings</h1>
         <div className={styles.formGroup}>
+          <IconRandom />
           <label htmlFor="random">Random Display</label>
           <input
             type="checkbox"
@@ -86,6 +89,7 @@ function Settings() {
             onChange={handleInputChange}
           />
 
+          <IconInterval />
           <label htmlFor="interval-in-seconds">Interval in Seconds</label>
           <input
             type="number"
