@@ -1,6 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import type * as React from 'react';
 import { useEffect, useState } from 'react';
+import { IconHome } from '~/components/icons/IconHome';
 import { WEB_SETTINGS } from '~/constants/routes';
 import styles from '~/routes/styles/settings.module.css';
 import {
@@ -96,6 +97,15 @@ function Settings() {
           />
         </div>
       </form>
+      <Link
+        to="/"
+        className={styles.homeLink}
+        aria-label="Slideshow Home"
+        title="Slideshow Home"
+        tabIndex={0}
+      >
+        <IconHome />
+      </Link>
     </div>
   );
 }

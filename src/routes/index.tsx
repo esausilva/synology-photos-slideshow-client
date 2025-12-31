@@ -1,7 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import { IconSettings } from '~/components/icons/IconSettings';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
+import styles from '~/routes/styles/index.module.css';
 import { getSlides } from '~/server-functions';
 import {
   getSlideshowSettings,
@@ -39,10 +41,21 @@ function Home() {
   }, []);
 
   return (
-    <Slideshow
-      slides={slides}
-      intervalInMs={settings.intervalInMs}
-      random={settings.random}
-    />
+    <>
+      <Slideshow
+        slides={slides}
+        intervalInMs={settings.intervalInMs}
+        random={settings.random}
+      />
+      <Link
+        to="/settings"
+        className={styles.settingsLink}
+        aria-label="Slideshow Settings"
+        title="Slideshow Settings"
+        tabIndex={0}
+      >
+        <IconSettings />
+      </Link>
+    </>
   );
 }

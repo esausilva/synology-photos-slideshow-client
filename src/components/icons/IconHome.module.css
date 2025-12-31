@@ -1,0 +1,12 @@
+.home-icon {
+  width: 2rem;
+  height: 2rem;
+
+  path {
+    stroke: #000000;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
