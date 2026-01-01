@@ -1,0 +1,14 @@
+services:
+  sweetnotes.fe:
+    image: esausilva/synology.photos.slideshow.client:latest
+    container_name: Synology.Photos.Slideshow.Client
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - 'linux/amd64'
+        - 'linux/arm64'
+    ports:
+      - '3500:3000'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'

@@ -1,0 +1,10 @@
+node_modules
+dist
+.output
+.git
+.github
+.vscode
+.idea
+README.md
+LICENSE
+.npmrc

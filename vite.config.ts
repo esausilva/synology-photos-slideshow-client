@@ -5,6 +5,7 @@ import { patchCssModules } from 'vite-css-modules';
 import tsConfigPaths from 'vite-tsconfig-paths'
 import browserslist from 'browserslist'
 import viteReact from '@vitejs/plugin-react'
+import { nitro } from 'nitro/vite';
 
 export default defineConfig({
   server: {
@@ -18,9 +19,11 @@ export default defineConfig({
     tanstackStart({
       srcDirectory: 'src',
     }),
+    nitro(),
     viteReact(), // react's vite plugin must come after start's vite plugin
     patchCssModules(),
   ],
+  nitro: {},
   css: {
     transformer: 'lightningcss',
     modules: {
@@ -32,6 +35,7 @@ export default defineConfig({
     }
   },
   build: {
-    cssMinify: 'lightningcss'
+    cssMinify: 'lightningcss',
+    emptyOutDir: true,
   }
 })

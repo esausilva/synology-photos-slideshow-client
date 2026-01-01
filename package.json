@@ -1,22 +1,23 @@
 {
-  "name": "start-from-scratch",
+  "name": "synology-photos-slideshow-client",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A responsive web application designed to display random image slideshows sourced from a Synology NAS. Built to pair seamlessly with my Synology Photos Slideshow API.",
   "type": "module",
   "scripts": {
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 vite dev",
     "build": "vite build && tsc --noEmit",
+    "start": "node .output/server/index.mjs",
     "preview": "vite preview"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Esau Silva (https://github.com/esausilva)",
+  "license": "GPL-3.0",
   "packageManager": "pnpm@10.26.1",
   "dependencies": {
-    "@tanstack/react-router": "^1.142.8",
-    "@tanstack/react-router-devtools": "^1.143.3",
-    "@tanstack/react-start": "^1.142.8",
+    "@tanstack/react-router": "^1.144.0",
+    "@tanstack/react-router-devtools": "^1.144.0",
+    "@tanstack/react-start": "^1.145.3",
+    "nitro": "3.0.1-alpha.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
