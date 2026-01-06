@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import type * as React from 'react';
 import { useEffect, useState } from 'react';
-import { IconHome } from '~/components/icons/IconHome';
-import { IconInterval } from '~/components/icons/IconInterval';
-import { IconRandom } from '~/components/icons/IconRandom';
+import { ToastContainer, toast } from 'react-toastify';
+import { IconHome, IconInterval, IconRandom } from '~/components/icons';
+import { RefreshPhotos } from '~/components/RefreshPhotos/RefreshPhotos';
 import { WEB_SETTINGS } from '~/constants/routes';
 import styles from '~/routes/styles/settings.module.css';
+import { getApiBaseUrlForClient } from '~/server-functions';
 import {
   getSlideshowSettings,
   initializeDb,
@@ -16,6 +17,7 @@ import {
 
 export const Route = createFileRoute(WEB_SETTINGS)({
   component: Settings,
+  loader: async () => await getApiBaseUrlForClient(),
 });
 
 interface FormState {
@@ -31,6 +33,7 @@ const initialState: FormState = {
 };
 
 function Settings() {
+  const apiBaseUrl = Route.useLoaderData();
   const [formState, setFormState] = useState(initialState);
 
   useEffect(() => {
@@ -46,11 +49,15 @@ function Settings() {
           initializeDb()
             .then(() => setFormState({ ...initialState, isLoading: false }))
             .catch((error) => {
+              toast.error('Failed to initialize slideshow settings.');
               console.error('Error initializing slideshow settings: ', error);
             });
         }
       })
-      .catch((err) => console.error('Failed to load settings:', err));
+      .catch((err) => {
+        toast.error('Failed to load settings.');
+        console.error('Failed to load settings:', err);
+      });
   }, []);
 
   const handleInputChange = async (
@@ -70,47 +77,58 @@ function Settings() {
       await persistSettings(state);
       setFormState(state);
     } catch (err) {
+      toast.error('Failed to save settings.');
       console.error('Failed to save settings:', err);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <form className={formState.isLoading ? styles.hidden : styles.form}>
-        <h1>Slideshow Settings</h1>
-        <div className={styles.formGroup}>
-          <IconRandom />
-          <label htmlFor="random">Random Display</label>
-          <input
-            type="checkbox"
-            id="random"
-            name="random"
-            checked={formState.random}
-            onChange={handleInputChange}
-          />
+    <>
+      <div className={styles.container}>
+        <Link
+          to="/"
+          className={styles.homeLink}
+          aria-label="Slideshow Home"
+          title="Slideshow Home"
+          tabIndex={0}
+        >
+          <IconHome />
+        </Link>
+        <form className={formState.isLoading ? styles.hidden : styles.form}>
+          <h1>Slideshow Settings</h1>
+          <div className={styles.formGroup}>
+            <IconRandom />
+            <label htmlFor="random">Random Display</label>
+            <input
+              type="checkbox"
+              id="random"
+              name="random"
+              checked={formState.random}
+              onChange={handleInputChange}
+            />
 
-          <IconInterval />
-          <label htmlFor="interval-in-seconds">Interval in Seconds</label>
-          <input
-            type="number"
-            id="interval-in-seconds"
-            name="intervalInSeconds"
-            min={5}
-            value={formState.intervalInSeconds}
-            onChange={handleInputChange}
-          />
-        </div>
-      </form>
-      <Link
-        to="/"
-        className={styles.homeLink}
-        aria-label="Slideshow Home"
-        title="Slideshow Home"
-        tabIndex={0}
-      >
-        <IconHome />
-      </Link>
-    </div>
+            <IconInterval />
+            <label htmlFor="interval-in-seconds">Interval in Seconds</label>
+            <input
+              type="number"
+              id="interval-in-seconds"
+              name="intervalInSeconds"
+              min={5}
+              value={formState.intervalInSeconds}
+              onChange={handleInputChange}
+            />
+          </div>
+          <RefreshPhotos apiBaseUrl={apiBaseUrl} />
+        </form>
+        <p className={styles.footer}>
+          Made with ❤️ by{' '}
+          <a href="https://www.esausilva.dev/" target="_blank" rel="noopener">
+            Esau Silva
+          </a>{' '}
+        </p>
+      </div>
+      <ToastContainer position="top-center" />
+    </>
   );
 }
 

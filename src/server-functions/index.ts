@@ -19,4 +19,14 @@ const getSlides = createServerFn({
   ) as string[];
 });
 
-export { getSlides };
+const getApiBaseUrlForClient = createServerFn({ method: 'GET' }).handler(() => {
+  const apiBaseUrl = process.env.CLIENT__API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('CLIENT__API_BASE_URL is not defined');
+  }
+
+  return apiBaseUrl;
+});
+
+export { getSlides, getApiBaseUrlForClient };

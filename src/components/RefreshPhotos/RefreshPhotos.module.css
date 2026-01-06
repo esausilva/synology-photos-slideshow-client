@@ -1,0 +1,18 @@
+.refresh-button {
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  background: #33bcb7;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #58d1c9;
+  }
+
+  &:disabled {
+    background: #279590;
+    cursor: not-allowed;
+  }
+}

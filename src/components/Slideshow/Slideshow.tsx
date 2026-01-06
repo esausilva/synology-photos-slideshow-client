@@ -49,20 +49,6 @@ export function Slideshow({
 
   return (
     <div className={styles.slideshowContainer}>
-      <div key={currentIndex} className={styles.slide}>
-        <div
-          className={styles.background}
-          style={{ backgroundImage: `url(${currentSlide})` }}
-        />
-        <div className={styles.imageContainer}>
-          <img
-            src={currentSlide}
-            alt={`Slide ${currentIndex}`}
-            className={styles.mainImage}
-          />
-        </div>
-      </div>
-
       {!random && (
         <>
           <button
@@ -84,6 +70,20 @@ export function Slideshow({
           </button>
         </>
       )}
+
+      <div key={currentIndex} className={styles.slide}>
+        <div
+          className={styles.background}
+          style={{ backgroundImage: `url(${currentSlide})` }}
+        />
+        <div className={styles.imageContainer}>
+          <img
+            src={currentSlide}
+            alt={`Slide ${currentIndex}`}
+            className={styles.mainImage}
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { IconSettings } from '~/components/icons/IconSettings';
+import { IconSettings } from '~/components/icons';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
 import styles from '~/routes/styles/index.module.css';
@@ -42,11 +42,6 @@ function Home() {
 
   return (
     <>
-      <Slideshow
-        slides={slides}
-        intervalInMs={settings.intervalInMs}
-        random={settings.random}
-      />
       <Link
         to="/settings"
         className={styles.settingsLink}
@@ -56,6 +51,29 @@ function Home() {
       >
         <IconSettings />
       </Link>
+      {slides.length === 0 ? (
+        <div className={styles.container}>
+          <p>No photos here yet 🫣.</p>
+          <p>
+            Just pop over to the{' '}
+            <Link
+              to="/settings"
+              aria-label="Slideshow Settings"
+              title="Slideshow Settings"
+              tabIndex={0}
+            >
+              Settings
+            </Link>{' '}
+            page to download a new batch!
+          </p>
+        </div>
+      ) : (
+        <Slideshow
+          slides={slides}
+          intervalInMs={settings.intervalInMs}
+          random={settings.random}
+        />
+      )}
     </>
   );
 }
