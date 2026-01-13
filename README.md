@@ -14,7 +14,7 @@ _Photos in the above animation come from [Lorem Picsum](https://picsum.photos/),
 
 The slideshow is an MVP with minimal features for now. Upon loading, the slideshow will set a default interval of 20 seconds and a random display order. These settings can be changed by clicking on the slider icon in the top right corner of the slideshow.
 
-The app persists the slideshow settings in the browser's IndexedDB. So the settings will not be preserved across devices. I might introduce a centralized database to persist settings across devices in the future.
+Since the app persists settings in the browser's IndexedDB, they will not be preserved across different devices. I might introduce a centralized database to persist settings across devices in the future.
 
 To get slideshow images for the first time or to refresh the images, press the "Refresh Photos" button on the settings page. This will delete the current set of images and fetch new ones from the Synology NAS.
 
