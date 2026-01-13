@@ -148,7 +148,7 @@ The slideshow will be available at `http://[YOUR-NAS-IP]:3500`.
 
 I highly suggest you create a DHCP reservation in your router for the IP address of your Synology NAS device.
 
-This will make it predictable and not change every time your NAS restarts, or the IP address changes.
+This will make the IP predictable and not change every time your NAS restarts, or DHCP assigns a new IP address.
 
 ## Future Enhancements
 
