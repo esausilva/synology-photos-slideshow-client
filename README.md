@@ -20,7 +20,7 @@ To get slideshow images for the first time or to refresh the images, press the "
 
 The slideshow is meant to be deployed on a Synology NAS device on your local network and accessed from within your local network.
 
-I have the API deployed and tested in Synology Container Manager, but it should work on any Docker host. i.e. Portainer.
+I have the app deployed and tested in Synology Container Manager, but it should work on any Docker host. i.e. Portainer.
 
 Table of Contents:
 
