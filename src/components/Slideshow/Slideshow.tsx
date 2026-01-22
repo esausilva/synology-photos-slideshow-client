@@ -41,6 +41,10 @@ export function Slideshow({
     return () => clearInterval(interval);
   }, [nextSlide, intervalInMs]);
 
+  useEffect(() => {
+    setCurrentIndex(getRandomNumber(slides.length));
+  }, [slides.length]);
+
   if (!slides || slides.length === 0) {
     return null;
   }
@@ -87,3 +91,5 @@ export function Slideshow({
     </div>
   );
 }
+
+const getRandomNumber = (max: number) => Math.floor(Math.random() * max);
