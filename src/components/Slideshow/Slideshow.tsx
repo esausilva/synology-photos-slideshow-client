@@ -17,7 +17,7 @@ export function Slideshow({
 
   const nextSlide = useCallback(() => {
     if (random) {
-      let nextIndex = Math.floor(Math.random() * slides.length);
+      let nextIndex = getRandomNumber(slides.length);
 
       // Ensure we don't get the same slide if there's more than one
       if (slides.length > 1 && nextIndex === currentIndex) {
@@ -42,8 +42,9 @@ export function Slideshow({
   }, [nextSlide, intervalInMs]);
 
   useEffect(() => {
-    setCurrentIndex(getRandomNumber(slides.length));
-  }, [slides.length]);
+    if (random)
+      setCurrentIndex(getRandomNumber(slides.length));
+  }, [slides.length, random]);
 
   if (!slides || slides.length === 0) {
     return null;

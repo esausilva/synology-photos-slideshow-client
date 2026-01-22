@@ -154,10 +154,13 @@ This will make the IP predictable and not change every time your NAS restarts, o
 
 To support the API's [Future Enhancements](https://github.com/esausilva/synology-photos-slideshow-api?tab=readme-ov-file#future-enhancements)
 
-- A delete button to remove a photo from the slideshow.
-- An overlay on the slideshow to display metadata about the photos. To include the photo's date taken and the photo's location and possibly a link to Google Maps with the location.
-- A setting to allow the user to configure the number of photos to download.
-- What else? Will see...
+| Feature                  | Description                                                                       | Satatus |
+| :----------------------- | :-------------------------------------------------------------------------------- | :------ |
+| **Manual Delete Button** | Adds a UI button to remove the currently displayed photo from the local rotation. |         |
+| **Metadata Overlay**     | Displays photo details like date and location with potential Google Maps links.   |         |
+| **Download Settings**    | A configuration menu to set the number of photos to download.                     |         |
+
+What else? Will see...
 
 ## Giving Back
 
