@@ -1,4 +1,4 @@
-import styles from './IconInterval.module.css';
+import styles from './IconSetting.module.css';
 
 export function IconInterval() {
   return (
@@ -6,7 +6,7 @@ export function IconInterval() {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={styles.intervalIcon}
+      className={styles.settingIcon}
     >
       <title>Slideshow Interval</title>
       <path

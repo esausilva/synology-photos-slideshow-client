@@ -1,4 +1,4 @@
-import styles from './IconRandom.module.css';
+import styles from './IconSetting.module.css';
 
 export function IconRandom() {
   return (
@@ -6,7 +6,7 @@ export function IconRandom() {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={styles.randomIcon}
+      className={styles.settingIcon}
     >
       <title>Slideshow Random</title>
       <g clipPath="url(#clip0_901_1363)">

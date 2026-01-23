@@ -1,0 +1,16 @@
+.trash-icon {
+  width: 2rem;
+  height: 2rem;
+  z-index: 10;
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+
+  path {
+    stroke: #f5222d;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

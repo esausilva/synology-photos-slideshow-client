@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { IconSettings } from '~/components/icons';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
 import styles from '~/routes/styles/index.module.css';
-import { getSlides } from '~/server-functions';
+import { getApiBaseUrlForClient, getSlides } from '~/server-functions';
 import {
   getSlideshowSettings,
   initializeDb,
@@ -14,11 +15,32 @@ import {
 
 export const Route = createFileRoute(WEB_HOME)({
   component: Home,
-  loader: async () => await getSlides(),
+  loader: async () => {
+    try {
+      const [slides, apiBaseUrl] = await Promise.all([
+        getSlides(),
+        getApiBaseUrlForClient(),
+      ]);
+
+      return {
+        slides,
+        apiBaseUrl,
+        errorMessage: null,
+      };
+    } catch (error) {
+      console.error('Error loading slides: ', error);
+      return {
+        slides: [],
+        apiBaseUrl: '',
+        errorMessage:
+          'Error loading slides. Please verify the Synology Photos Slideshow API is running and accessible.',
+      };
+    }
+  },
 });
 
 function Home() {
-  const slides = Route.useLoaderData();
+  const { slides, apiBaseUrl, errorMessage } = Route.useLoaderData();
   const [settings, setSettings] = useState({} as SlideshowSettings);
 
   useEffect(() => {
@@ -39,6 +61,12 @@ function Home() {
         console.error('Error loading slideshow settings: ', error);
       });
   }, []);
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+    }
+  }, [errorMessage]);
 
   return (
     <>
@@ -70,10 +98,12 @@ function Home() {
       ) : (
         <Slideshow
           slides={slides}
+          apiBaseUrl={apiBaseUrl}
           intervalInMs={settings.intervalInMs}
           random={settings.random}
         />
       )}
+      <ToastContainer position="top-center" />
     </>
   );
 }

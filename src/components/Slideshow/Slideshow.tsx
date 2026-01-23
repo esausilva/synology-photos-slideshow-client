@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
-
+import { DeletePhoto } from '~/components/DeletePhoto/DeletePhoto';
 import styles from './Slideshow.module.css';
 
 interface SlideshowProps {
   slides: string[];
+  apiBaseUrl: string;
   intervalInMs?: number;
   random?: boolean;
 }
 
 export function Slideshow({
   slides,
+  apiBaseUrl,
   intervalInMs = 20000,
   random = false,
 }: SlideshowProps) {
@@ -42,8 +44,7 @@ export function Slideshow({
   }, [nextSlide, intervalInMs]);
 
   useEffect(() => {
-    if (random)
-      setCurrentIndex(getRandomNumber(slides.length));
+    if (random) setCurrentIndex(getRandomNumber(slides.length));
   }, [slides.length, random]);
 
   if (!slides || slides.length === 0) {
@@ -54,6 +55,8 @@ export function Slideshow({
 
   return (
     <div className={styles.slideshowContainer}>
+      <DeletePhoto slide={currentSlide} apiBaseUrl={apiBaseUrl} />
+
       {!random && (
         <>
           <button
