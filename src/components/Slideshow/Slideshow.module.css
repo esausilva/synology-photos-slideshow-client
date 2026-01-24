@@ -29,6 +29,21 @@
   }
 }
 
+.delete-photo-button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+.slide:hover .delete-photo-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .background {
   position: absolute;
   top: 0;

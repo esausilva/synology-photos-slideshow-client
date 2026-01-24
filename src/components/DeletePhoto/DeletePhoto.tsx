@@ -2,16 +2,17 @@ import { useRouter } from '@tanstack/react-router';
 import { toast } from 'react-toastify';
 import { IconTrash } from '~/components/icons/IconTrash';
 import { API_DELETE_PHOTOS } from '~/constants/routes';
+import { useApiBaseUrl } from '~/contexts/ApiBaseUrlContext';
 
 import styles from './DeletePhoto.module.css';
 
 interface DeletePhotoProps {
   slide: string;
-  apiBaseUrl: string;
 }
 
-export function DeletePhoto({ slide, apiBaseUrl }: DeletePhotoProps) {
+export function DeletePhoto({ slide }: DeletePhotoProps) {
   const router = useRouter();
+  const apiBaseUrl = useApiBaseUrl();
 
   const handleClick = async (): Promise<void> => {
     try {

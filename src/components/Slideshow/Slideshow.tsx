@@ -4,14 +4,12 @@ import styles from './Slideshow.module.css';
 
 interface SlideshowProps {
   slides: string[];
-  apiBaseUrl: string;
   intervalInMs?: number;
   random?: boolean;
 }
 
 export function Slideshow({
   slides,
-  apiBaseUrl,
   intervalInMs = 20000,
   random = false,
 }: SlideshowProps) {
@@ -55,8 +53,6 @@ export function Slideshow({
 
   return (
     <div className={styles.slideshowContainer}>
-      <DeletePhoto slide={currentSlide} apiBaseUrl={apiBaseUrl} />
-
       {!random && (
         <>
           <button
@@ -80,6 +76,7 @@ export function Slideshow({
       )}
 
       <div key={currentIndex} className={styles.slide}>
+        <DeletePhoto slide={currentSlide} />
         <div
           className={styles.background}
           style={{ backgroundImage: `url(${currentSlide})` }}

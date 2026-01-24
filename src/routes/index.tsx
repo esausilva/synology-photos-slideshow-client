@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { IconSettings } from '~/components/icons';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
+import { ApiBaseUrlProvider } from '~/contexts/ApiBaseUrlContext';
 import styles from '~/routes/styles/index.module.css';
 import { getApiBaseUrlForClient, getSlides } from '~/server-functions';
 import {
@@ -96,12 +97,13 @@ function Home() {
           </p>
         </div>
       ) : (
-        <Slideshow
-          slides={slides}
-          apiBaseUrl={apiBaseUrl}
-          intervalInMs={settings.intervalInMs}
-          random={settings.random}
-        />
+        <ApiBaseUrlProvider apiBaseUrl={apiBaseUrl}>
+          <Slideshow
+            slides={slides}
+            intervalInMs={settings.intervalInMs}
+            random={settings.random}
+          />
+        </ApiBaseUrlProvider>
       )}
       <ToastContainer position="top-center" />
     </>
