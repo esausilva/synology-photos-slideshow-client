@@ -93,7 +93,7 @@ export function Slideshow({
   );
 }
 
-const getRandomNumber = (max: number) => {
+const getRandomNumber = (max: number) : number => {
   if (!Number.isInteger(max) || max < 1) {
     throw new Error('"max" must be an integer ≥ 1');
   }
