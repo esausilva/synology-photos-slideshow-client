@@ -93,4 +93,25 @@ export function Slideshow({
   );
 }
 
-const getRandomNumber = (max: number) => Math.floor(Math.random() * max);
+const getRandomNumber = (max: number) => {
+  if (!Number.isInteger(max) || max < 1) {
+    throw new Error('"max" must be an integer ≥ 1');
+  }
+
+  const range = max; // we want [1, max]
+  const maxUint32 = 0xffffffff; // 2^32 - 1
+  const limit = maxUint32 - (maxUint32 % range); // rejection limit
+
+  const buf = new Uint32Array(1);
+
+  while (true) {
+    crypto.getRandomValues(buf);
+    const r = buf[0];
+
+    // only use values in [0, limit), reject the rest
+    if (r < limit) {
+      // map to [0, range-1], then +1 → [1, range]
+      return (r % range) + 1;
+    }
+  }
+};
