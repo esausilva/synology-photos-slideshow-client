@@ -1,9 +1,19 @@
 import { createServerFn } from '@tanstack/react-start';
 import { API_GET_SLIDES } from '~/constants/routes';
 
+export interface Slide {
+  url: string;
+  dateTaken: Date;
+  googleMapsLink: string;
+}
+
+interface SlideFromApi extends Slide {
+  relativeUrl: string;
+}
+
 const getSlides = createServerFn({
   method: 'GET',
-}).handler(async () => {
+}).handler(async (): Promise<Slide[]> => {
   const res = await fetch(
     `${process.env.SERVER__API_BASE_URL}${API_GET_SLIDES}`,
   );
@@ -12,11 +22,15 @@ const getSlides = createServerFn({
     throw new Error('Failed to fetch slides');
   }
 
-  const slidesUri = await res.json();
+  const slides: SlideFromApi[] = await res.json();
 
-  return slidesUri.map(
-    (slide: string) => `${process.env.CLIENT__API_BASE_URL}${slide}`,
-  ) as string[];
+  return slides.map(
+    (slide: SlideFromApi): Slide => ({
+      url: `${process.env.CLIENT__API_BASE_URL}${slide.relativeUrl}`,
+      dateTaken: new Date(slide.dateTaken),
+      googleMapsLink: slide.googleMapsLink,
+    }),
+  );
 });
 
 const getApiBaseUrlForClient = createServerFn({ method: 'GET' }).handler(() => {

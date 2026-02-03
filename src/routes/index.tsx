@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { IconSettings } from '~/components/icons';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
 import { ApiBaseUrlProvider } from '~/contexts/ApiBaseUrlContext';
 import styles from '~/routes/styles/index.module.css';
+import type { Slide } from '~/server-functions';
 import { getApiBaseUrlForClient, getSlides } from '~/server-functions';
 import {
   getSlideshowSettings,
@@ -16,7 +17,11 @@ import {
 
 export const Route = createFileRoute(WEB_HOME)({
   component: Home,
-  loader: async () => {
+  loader: async (): Promise<{
+    slides: Slide[];
+    apiBaseUrl: string;
+    errorMessage: string | null;
+  }> => {
     try {
       const [slides, apiBaseUrl] = await Promise.all([
         getSlides(),

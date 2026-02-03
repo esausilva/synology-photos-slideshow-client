@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { DeletePhoto } from '~/components/DeletePhoto/DeletePhoto';
+import type { Slide } from '~/server-functions';
 import styles from './Slideshow.module.css';
 
 interface SlideshowProps {
-  slides: string[];
+  slides: Slide[];
   intervalInMs?: number;
   random?: boolean;
 }
@@ -76,14 +77,14 @@ export function Slideshow({
       )}
 
       <div key={currentIndex} className={styles.slide}>
-        <DeletePhoto slide={currentSlide} />
+        <DeletePhoto slide={currentSlide.url} />
         <div
           className={styles.background}
-          style={{ backgroundImage: `url(${currentSlide})` }}
+          style={{ backgroundImage: `url(${currentSlide.url})` }}
         />
         <div className={styles.imageContainer}>
           <img
-            src={currentSlide}
+            src={currentSlide.url}
             alt={`Slide ${currentIndex}`}
             className={styles.mainImage}
           />
@@ -93,7 +94,7 @@ export function Slideshow({
   );
 }
 
-const getRandomNumber = (max: number) : number => {
+const getRandomNumber = (max: number): number => {
   if (!Number.isInteger(max) || max < 1) {
     throw new Error('"max" must be an integer ≥ 1');
   }

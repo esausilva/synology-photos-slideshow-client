@@ -7,7 +7,12 @@ export function RefreshPhotos({ apiBaseUrl }: { apiBaseUrl: string }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleRefreshClick = async (): Promise<void> => {
-    if (!confirm('Are you sure you want to refresh your photos?')) return;
+    if (
+      !confirm(
+        'Are you sure you want to refresh your photos?\n\nNOTE: This is a process-intensive operation. Please be patient as it can take a few minutes.',
+      )
+    )
+      return;
 
     setIsLoading(true);
 
