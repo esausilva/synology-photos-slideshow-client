@@ -156,8 +156,8 @@ To support the API's [Future Enhancements](https://github.com/esausilva/synology
 
 | Feature                  | Description                                                                                     | Satatus |
 |:-------------------------|:------------------------------------------------------------------------------------------------|:--------|
-| **Manual Delete Button** | Adds a UI button to remove the currently displayed photo from the local rotation.               | ✅      |
-| **Metadata Overlay**     | Displays photo details like date and location with potential Google Maps links.                 |         |
+| **Manual Delete Button** | Adds a UI button to remove the currently displayed photo from the local rotation.               | ✅       |
+| **Metadata Overlay**     | Displays photo details like date and location with potential Google Maps links.                 | ✅       |
 | **Download Settings**    | A configuration menu to set the number of photos to download.                                   |         |
 | **Gallery View**         | A new page displaying all photos in a gallery format and the ability to delete multiple photos. |         |
 
