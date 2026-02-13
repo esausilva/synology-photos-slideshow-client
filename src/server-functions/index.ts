@@ -5,6 +5,7 @@ export interface Slide {
   url: string;
   dateTaken: Date;
   googleMapsLink: string;
+  location: string
 }
 
 interface SlideFromApi extends Slide {
@@ -29,6 +30,7 @@ const getSlides = createServerFn({
       url: `${process.env.CLIENT__API_BASE_URL}${slide.relativeUrl}`,
       dateTaken: new Date(slide.dateTaken),
       googleMapsLink: slide.googleMapsLink,
+      location: slide.location
     }),
   );
 });

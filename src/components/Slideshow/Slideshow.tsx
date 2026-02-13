@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { DeletePhoto } from '~/components/DeletePhoto/DeletePhoto';
-import { IconMapMarker } from '~/components/icons';
 import type { Slide } from '~/server-functions';
+import { SlideOverlay } from './SlideOverlay';
 import styles from './Slideshow.module.css';
 
 interface SlideshowProps {
@@ -90,27 +90,7 @@ export function Slideshow({
             className={styles.mainImage}
           />
         </div>
-        <div className={styles.overlay}>
-          {currentSlide.dateTaken &&
-            !Number.isNaN(currentSlide.dateTaken.getTime()) && (
-              <div>
-                {currentSlide.dateTaken.toLocaleDateString('en-US', {
-                  month: '2-digit',
-                  day: '2-digit',
-                  year: 'numeric',
-                })}
-              </div>
-            )}
-          {currentSlide.googleMapsLink && (
-            <a
-              href={currentSlide.googleMapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconMapMarker />
-            </a>
-          )}
-        </div>
+        <SlideOverlay slide={currentSlide} />
       </div>
     </div>
   );

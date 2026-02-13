@@ -82,13 +82,12 @@
   height: 2em;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 10;
-  display: grid;
-  grid-template-columns: auto auto;
-  align-content: center;
+  display: flex;
   justify-content: center;
+  align-items: center;
   color: #ffffff;
   font-size: 1.5rem;
-  gap: 20px;
+  gap: .3em;
 
   & a {
     color: inherit;
