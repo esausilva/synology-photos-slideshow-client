@@ -6,6 +6,7 @@ const RECORD_KEY = 1; // Use a fixed key for the single settings record
 export interface SlideshowSettings {
   random: boolean;
   intervalInMs: number;
+  displayOverlay: boolean;
 }
 
 interface SlideshowSettingsRecord extends SlideshowSettings {
@@ -15,6 +16,7 @@ interface SlideshowSettingsRecord extends SlideshowSettings {
 export const seedSettings: SlideshowSettings = {
   random: true,
   intervalInMs: 20000,
+  displayOverlay: true,
 };
 
 export const initializeDb: () => Promise<void> = async () => {
@@ -59,6 +61,7 @@ export async function upsertSlideshowSettings(
     id: RECORD_KEY,
     random: slideshowSettings.random,
     intervalInMs: slideshowSettings.intervalInMs,
+    displayOverlay: slideshowSettings.displayOverlay,
   };
 
   // Use put() for upsert operation

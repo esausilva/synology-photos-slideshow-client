@@ -107,6 +107,7 @@ function Home() {
             slides={slides}
             intervalInMs={settings.intervalInMs}
             random={settings.random}
+            displayOverlay={settings.displayOverlay ?? true}
           />
         </ApiBaseUrlProvider>
       )}

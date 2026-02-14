@@ -8,12 +8,14 @@ interface SlideshowProps {
   slides: Slide[];
   intervalInMs?: number;
   random?: boolean;
+  displayOverlay?: boolean;
 }
 
 export function Slideshow({
   slides,
   intervalInMs = 20000,
   random = false,
+  displayOverlay = true,
 }: SlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -90,7 +92,7 @@ export function Slideshow({
             className={styles.mainImage}
           />
         </div>
-        <SlideOverlay slide={currentSlide} />
+        {displayOverlay && <SlideOverlay slide={currentSlide} />}
       </div>
     </div>
   );

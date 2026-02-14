@@ -2,7 +2,12 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import type * as React from 'react';
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { IconHome, IconInterval, IconRandom } from '~/components/icons';
+import {
+  IconHome,
+  IconInterval,
+  IconOverlay,
+  IconRandom,
+} from '~/components/icons';
 import { RefreshPhotos } from '~/components/RefreshPhotos/RefreshPhotos';
 import { WEB_SETTINGS } from '~/constants/routes';
 import styles from '~/routes/styles/settings.module.css';
@@ -24,12 +29,14 @@ interface FormState {
   isLoading: boolean;
   random: boolean;
   intervalInSeconds: number;
+  displayOverlay: boolean;
 }
 
 const initialState: FormState = {
   isLoading: true,
   random: seedSettings.random,
   intervalInSeconds: seedSettings.intervalInMs / 1000,
+  displayOverlay: seedSettings.displayOverlay,
 };
 
 function Settings() {
@@ -44,6 +51,8 @@ function Settings() {
             isLoading: false,
             random: settings.random,
             intervalInSeconds: settings.intervalInMs / 1000,
+            displayOverlay:
+              settings.displayOverlay ?? seedSettings.displayOverlay,
           });
         } else {
           initializeDb()
@@ -107,6 +116,16 @@ function Settings() {
               onChange={handleInputChange}
             />
 
+            <IconOverlay />
+            <label htmlFor="displayOverlay">Display Slide Overlay</label>
+            <input
+              type="checkbox"
+              id="displayOverlay"
+              name="displayOverlay"
+              checked={formState.displayOverlay}
+              onChange={handleInputChange}
+            />
+
             <IconInterval />
             <label htmlFor="interval-in-seconds">Interval in Seconds</label>
             <input
@@ -136,6 +155,7 @@ const persistSettings = async (state: FormState) => {
   const slideshowSettings: SlideshowSettings = {
     random: state.random,
     intervalInMs: state.intervalInSeconds * 1000,
+    displayOverlay: state.displayOverlay,
   };
 
   await upsertSlideshowSettings(slideshowSettings);
