@@ -1,7 +1,8 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { Await, createFileRoute, defer, Link } from '@tanstack/react-router';
+import { Suspense, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { IconSettings } from '~/components/icons';
+import { HomeSkeleton } from '~/components/Slideshow/HomeSkeleton';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
 import { ApiBaseUrlProvider } from '~/contexts/ApiBaseUrlContext';
@@ -18,25 +19,23 @@ import {
 export const Route = createFileRoute(WEB_HOME)({
   component: Home,
   loader: async (): Promise<{
-    slides: Slide[];
+    slides: Promise<Slide[]>;
     apiBaseUrl: string;
     errorMessage: string | null;
   }> => {
     try {
-      const [slides, apiBaseUrl] = await Promise.all([
-        getSlides(),
-        getApiBaseUrlForClient(),
-      ]);
+      const apiBaseUrl = await getApiBaseUrlForClient();
+      const slidesPromise = getSlides();
 
       return {
-        slides,
+        slides: defer(slidesPromise),
         apiBaseUrl,
         errorMessage: null,
       };
     } catch (error) {
       console.error('Error loading slides: ', error);
       return {
-        slides: [],
+        slides: Promise.resolve([]),
         apiBaseUrl: '',
         errorMessage:
           'Error loading slides. Please verify the Synology Photos Slideshow API is running and accessible.',
@@ -85,31 +84,43 @@ function Home() {
       >
         <IconSettings />
       </Link>
-      {slides.length === 0 ? (
+      {errorMessage ? (
         <div className={styles.container}>
-          <p>No photos here yet 🫣.</p>
-          <p>
-            Just pop over to the{' '}
-            <Link
-              to="/settings"
-              aria-label="Slideshow Settings"
-              title="Slideshow Settings"
-              tabIndex={0}
-            >
-              Settings
-            </Link>{' '}
-            page to download a new batch!
-          </p>
+          <p>{errorMessage}</p>
         </div>
       ) : (
-        <ApiBaseUrlProvider apiBaseUrl={apiBaseUrl}>
-          <Slideshow
-            slides={slides}
-            intervalInMs={settings.intervalInMs}
-            random={settings.random}
-            displayOverlay={settings.displayOverlay ?? true}
-          />
-        </ApiBaseUrlProvider>
+        <Suspense fallback={<HomeSkeleton delay={500} />}>
+          <Await promise={slides}>
+            {(slides) =>
+              slides.length === 0 ? (
+                <div className={styles.container}>
+                  <p>No photos here yet 🫣.</p>
+                  <p>
+                    Just pop over to the{' '}
+                    <Link
+                      to="/settings"
+                      aria-label="Slideshow Settings"
+                      title="Slideshow Settings"
+                      tabIndex={0}
+                    >
+                      Settings
+                    </Link>{' '}
+                    page to download a new batch!
+                  </p>
+                </div>
+              ) : (
+                <ApiBaseUrlProvider apiBaseUrl={apiBaseUrl}>
+                  <Slideshow
+                    slides={slides}
+                    intervalInMs={settings.intervalInMs}
+                    random={settings.random}
+                    displayOverlay={settings.displayOverlay ?? true}
+                  />
+                </ApiBaseUrlProvider>
+              )
+            }
+          </Await>
+        </Suspense>
       )}
       <ToastContainer position="top-center" />
     </>
