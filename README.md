@@ -6,21 +6,17 @@ Below you can take a look at the slideshow in action.
 
 <div align="center">
 
-![synology-slideshow-photos-client.gif](resources/synology-slideshow-photos-client.gif "Synology Photos Slideshow Client")
+![Synology Photos Slideshow Client](resources/synology-slideshow-photos-client-be8c5eb7.gif "Synology Photos Slideshow Client")
 
 </div>
 
-_Photos in the above animation come from [Lorem Picsum](https://picsum.photos/), and the animation is sped up to 2x for a faster preview._
+_The animation is sped up for a faster preview._
 
-The slideshow is an MVP with minimal features for now. Upon loading, the slideshow will set a default interval of 20 seconds and a random display order. These settings can be changed by clicking on the slider icon in the top right corner of the slideshow.
+Upon loading, the slideshow will set a default interval of 20 seconds and a random display order. These settings can be changed by clicking on the slider icon in the top right corner of the slideshow.
 
-Since the app persists settings in the browser's IndexedDB, they will not be preserved across different devices. I might introduce a centralized database to persist settings across devices in the future.
+The slideshow is meant to be deployed on a Synology NAS device on your local network and accessed from within your local network to keep the slideshow private.
 
-To get slideshow images for the first time or to refresh the images, press the "Refresh Photos" button on the settings page. This will delete the current set of images and fetch new ones from the Synology NAS.
-
-The slideshow is meant to be deployed on a Synology NAS device on your local network and accessed from within your local network.
-
-I have the app deployed and tested in Synology Container Manager, but it should work on any Docker host. i.e. Portainer.
+I have the app deployed and tested in Synology Container Manager, but it should work on any Docker host. e.g., Portainer.
 
 Table of Contents:
 
@@ -34,14 +30,30 @@ Table of Contents:
 
 ## Technical Details
 
-The app calls different endpoints from my [Synology Photos Slideshow API](https://github.com/esausilva/synology-photos-slideshow-api) to fetch, serve and download the slideshow images. 
+The app persists settings in the browser's IndexedDB, so they will not be preserved across different devices. I might introduce a centralized database to persist settings across devices in the future.
+
+To get slideshow images for the first time or to refresh the images, press the "**Refresh Photos**" button on the settings page. This will delete the current set of images and fetch new ones from the Synology NAS.
+
+The app calls different endpoints from my [Synology Photos Slideshow API](https://github.com/esausilva/synology-photos-slideshow-api) to fetch, serve, and download the slideshow images. 
 
 API's endpoints:
 
-- [Get Photo URLs](https://github.com/esausilva/synology-photos-slideshow-api#get-photo-urls): This endpoint returns a list of photo URLs that can be used in a client slideshow application.
-- [Download Photos](https://github.com/esausilva/synology-photos-slideshow-api#download-photos): This endpoint randomly selects and downloads photos from a specified folder(s) on your Synology NAS device. The downloads are placed in a specified folder where the API has access to.
+- [Get Photo URLs](https://github.com/esausilva/synology-photos-slideshow-api#get-photo-slides): This endpoint returns a collection of slides with the following properties: relativeUrl, dateTaken, googleMapsLink, and location. 
+- [Download Photos](https://github.com/esausilva/synology-photos-slideshow-api#download-photos): This endpoint randomly selects, downloads, and converts the downloaded photos to WebP format.
+- [Bulk Delete Photos](https://github.com/esausilva/synology-photos-slideshow-api#bulk-delete-photos): This endpoint deletes photos from the slideshow folder and accepts the list of photo names to delete.
 
 Refer to the API's documentation for more details.
+
+## Features
+
+| Feature                             | Description                                                                                                           |
+|:------------------------------------|:----------------------------------------------------------------------------------------------------------------------|
+| **Delete Button**                   | Adds a UI button to remove the currently displayed photo from the local rotation. The button is showed on slide hover |
+| **Metadata Overlay****              | Displays photo details: date taken and location with Google Maps link.                                                |
+| **Randmom or Sequential Display**** | Allows for the slideshow to display the photos randomly or in order.                                                  |
+| **Interval in Seconds****           | Configure the interval delay between slides.                                                                          |
+
+**Configurable in the settings page.
 
 ## Local Development
 
@@ -123,7 +135,7 @@ Right-click on the image and select "Download this image".
 
 ![Registry Search](resources/registry-search.jpg "Registry Search")
 
-Once the image is downloaded, you can create a container from it by going to the "Image" tab, then right-clicking on the image and selecting "Run".
+Once the image is downloaded, you can create a container from it by going to the "Image" tab, then right-clicking on the image, and selecting "Run".
 
 ![Synology Photos Slideshow Client Docker Image](resources/synology-photo-slideshow-client-docker-image.jpg "Synology Photos Slideshow Client Docker Image")
 
@@ -144,7 +156,7 @@ Make sure you replace `[YOUR-NAS-IP]` with the IP address of your Synology NAS.
 
 The slideshow will be available at `http://[YOUR-NAS-IP]:3500`.
 
-## Important !!!!!!!
+## Important!!!!!!!
 
 I highly suggest you create a DHCP reservation in your router for the IP address of your Synology NAS device.
 
