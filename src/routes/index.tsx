@@ -6,6 +6,7 @@ import { HomeSkeleton } from '~/components/Slideshow/HomeSkeleton';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
 import { ApiBaseUrlProvider } from '~/contexts/ApiBaseUrlContext';
+import { useSlideshowSignalR } from '~/hooks/useSlideshowSignalR';
 import styles from '~/routes/styles/index.module.css';
 import type { Slide } from '~/server-functions';
 import { getApiBaseUrlForClient, getSlides } from '~/server-functions';
@@ -47,6 +48,8 @@ export const Route = createFileRoute(WEB_HOME)({
 function Home() {
   const { slides, apiBaseUrl, errorMessage } = Route.useLoaderData();
   const [settings, setSettings] = useState({} as SlideshowSettings);
+
+  useSlideshowSignalR({ apiBaseUrl });
 
   useEffect(() => {
     getSlideshowSettings()
