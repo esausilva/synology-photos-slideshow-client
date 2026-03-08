@@ -5,8 +5,11 @@ import { IconSettings } from '~/components/icons';
 import { HomeSkeleton } from '~/components/Slideshow/HomeSkeleton';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
-import { ApiBaseUrlProvider } from '~/contexts/ApiBaseUrlContext';
-import { useSlideshowSignalR } from '~/hooks/useSlideshowSignalR';
+import { SlideshowMetadataProvider } from '~/contexts/SlideshowMetadataContext';
+import {
+  type UseSlideshowSignalRReturn,
+  useSlideshowSignalR,
+} from '~/hooks/useSlideshowSignalR';
 import styles from '~/routes/styles/index.module.css';
 import type { Slide } from '~/server-functions';
 import { getApiBaseUrlForClient, getSlides } from '~/server-functions';
@@ -49,7 +52,10 @@ function Home() {
   const { slides, apiBaseUrl, errorMessage } = Route.useLoaderData();
   const [settings, setSettings] = useState({} as SlideshowSettings);
 
-  useSlideshowSignalR({ apiBaseUrl });
+  const { connectionId: signalRConnectionId }: UseSlideshowSignalRReturn =
+    useSlideshowSignalR({
+      apiBaseUrl,
+    });
 
   useEffect(() => {
     getSlideshowSettings()
@@ -112,14 +118,17 @@ function Home() {
                   </p>
                 </div>
               ) : (
-                <ApiBaseUrlProvider apiBaseUrl={apiBaseUrl}>
+                <SlideshowMetadataProvider
+                  apiBaseUrl={apiBaseUrl}
+                  signalRConnectionId={signalRConnectionId}
+                >
                   <Slideshow
                     slides={slides}
                     intervalInMs={settings.intervalInMs}
                     random={settings.random}
                     displayOverlay={settings.displayOverlay ?? true}
                   />
-                </ApiBaseUrlProvider>
+                </SlideshowMetadataProvider>
               )
             }
           </Await>

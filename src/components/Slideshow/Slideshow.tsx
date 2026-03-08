@@ -18,27 +18,33 @@ export function Slideshow({
   displayOverlay = true,
 }: SlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [localSlides, setLocalSlides] = useState<Slide[]>([]);
 
   const nextSlide = useCallback(() => {
     if (random) {
-      let nextIndex = getRandomNumber(slides.length);
+      let nextIndex = getRandomNumber(localSlides.length);
 
       // Ensure we don't get the same slide if there's more than one
-      if (slides.length > 1 && nextIndex === currentIndex) {
-        nextIndex = (nextIndex + 1) % slides.length;
+      if (localSlides.length > 1 && nextIndex === currentIndex) {
+        nextIndex = (nextIndex + 1) % localSlides.length;
       }
 
       setCurrentIndex(nextIndex);
     } else {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % localSlides.length);
     }
-  }, [slides.length, random, currentIndex]);
+  }, [localSlides.length, random, currentIndex]);
 
   const prevSlide = useCallback(() => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length,
+      (prevIndex) => (prevIndex - 1 + localSlides.length) % localSlides.length,
     );
-  }, [slides.length]);
+  }, [localSlides.length]);
+
+  const deleteSlide = (): void => {
+    const newSlides = localSlides.filter((s) => s.url !== currentSlide.url);
+    setLocalSlides(newSlides);
+  };
 
   useEffect(() => {
     const interval = setInterval(nextSlide, intervalInMs);
@@ -46,14 +52,18 @@ export function Slideshow({
   }, [nextSlide, intervalInMs]);
 
   useEffect(() => {
-    if (random) setCurrentIndex(getRandomNumber(slides.length));
-  }, [slides.length, random]);
+    if (random) setCurrentIndex(getRandomNumber(localSlides.length));
+  }, [localSlides.length, random]);
 
-  if (!slides || slides.length === 0) {
+  useEffect(() => {
+    setLocalSlides(slides);
+  }, [slides]);
+
+  if (!localSlides || localSlides.length === 0) {
     return null;
   }
 
-  const currentSlide = slides[currentIndex];
+  const currentSlide = localSlides[currentIndex];
 
   return (
     <div className={styles.slideshowContainer}>
@@ -78,22 +88,23 @@ export function Slideshow({
           </button>
         </>
       )}
-
-      <div key={currentIndex} className={styles.slide}>
-        <DeletePhoto slide={currentSlide.url} />
-        <div
-          className={styles.background}
-          style={{ backgroundImage: `url(${currentSlide.url})` }}
-        />
-        <div className={styles.imageContainer}>
-          <img
-            src={currentSlide.url}
-            alt={`Slide ${currentIndex}`}
-            className={styles.mainImage}
+      {currentSlide && (
+        <div key={currentIndex} className={styles.slide}>
+          <DeletePhoto slide={currentSlide.url} deleteSlide={deleteSlide} />
+          <div
+            className={styles.background}
+            style={{ backgroundImage: `url(${currentSlide.url})` }}
           />
+          <div className={styles.imageContainer}>
+            <img
+              src={currentSlide.url}
+              alt={`Slide ${currentIndex}`}
+              className={styles.mainImage}
+            />
+          </div>
+          {displayOverlay && <SlideOverlay slide={currentSlide} />}
         </div>
-        {displayOverlay && <SlideOverlay slide={currentSlide} />}
-      </div>
+      )}
     </div>
   );
 }

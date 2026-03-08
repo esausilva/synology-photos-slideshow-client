@@ -1,18 +1,16 @@
-import { useRouter } from '@tanstack/react-router';
 import { toast } from 'react-toastify';
 import { IconTrash } from '~/components/icons/IconTrash';
 import { API_DELETE_PHOTOS } from '~/constants/routes';
-import { useApiBaseUrl } from '~/contexts/ApiBaseUrlContext';
-
+import { useSlideshowMetadata } from '~/contexts/SlideshowMetadataContext';
 import styles from './DeletePhoto.module.css';
 
 interface DeletePhotoProps {
   slide: string;
+  deleteSlide: () => void;
 }
 
-export function DeletePhoto({ slide }: DeletePhotoProps) {
-  const router = useRouter();
-  const apiBaseUrl = useApiBaseUrl();
+export function DeletePhoto({ slide, deleteSlide }: DeletePhotoProps) {
+  const { apiBaseUrl, signalRConnectionId } = useSlideshowMetadata();
 
   const handleClick = async (): Promise<void> => {
     try {
@@ -21,7 +19,10 @@ export function DeletePhoto({ slide }: DeletePhotoProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify([extractPhotoName(slide) ?? "no-photo.jpg"]),
+        body: JSON.stringify({
+          photoNames: [extractPhotoName(slide) ?? 'no-photo.jpg'],
+          signalRConnectionId: signalRConnectionId,
+        }),
       });
 
       if (!response.ok) {
@@ -31,7 +32,7 @@ export function DeletePhoto({ slide }: DeletePhotoProps) {
       }
 
       toast.success('Photo deleted successfully.');
-      await router.invalidate();
+      deleteSlide();
     } catch (error) {
       toast.error('Failed to delete photo.');
       console.error('Error deleting photo:', error);

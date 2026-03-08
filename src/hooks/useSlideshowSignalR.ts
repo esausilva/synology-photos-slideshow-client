@@ -15,11 +15,19 @@ interface UseSlideshowSignalRProps {
   apiBaseUrl: string;
 }
 
-export function useSlideshowSignalR({ apiBaseUrl }: UseSlideshowSignalRProps) {
+export interface UseSlideshowSignalRReturn {
+  isConnected: boolean;
+  connectionId?: string | null;
+}
+
+export function useSlideshowSignalR({
+  apiBaseUrl,
+}: UseSlideshowSignalRProps): UseSlideshowSignalRReturn {
   const router = useRouter();
 
   // Add a state to let the UI know if we are live or refreshing
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionId, setConnectionId] = useState<string | null>(null);
 
   const debouncedInvalidate = useMemo(
     () =>
@@ -62,6 +70,7 @@ export function useSlideshowSignalR({ apiBaseUrl }: UseSlideshowSignalRProps) {
       try {
         await connection.start();
         setIsConnected(true);
+        setConnectionId(connection.connectionId);
         console.log('SignalR: Connected to Slideshow Hub');
       } catch (err) {
         console.error('SignalR: Connection failed: ', err);
@@ -88,7 +97,7 @@ export function useSlideshowSignalR({ apiBaseUrl }: UseSlideshowSignalRProps) {
     };
   }, [apiBaseUrl, debouncedInvalidate]);
 
-  return { isConnected };
+  return { isConnected, connectionId };
 }
 
 function debounce({ fn, ms }: { fn: () => void; ms: number }) {
