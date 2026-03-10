@@ -42,6 +42,7 @@ const initialState: FormState = {
 function Settings() {
   const apiBaseUrl = Route.useLoaderData();
   const [formState, setFormState] = useState(initialState);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     getSlideshowSettings()
@@ -96,7 +97,7 @@ function Settings() {
       <div className={styles.container}>
         <Link
           to="/"
-          className={styles.homeLink}
+          className={`${styles.homeLink} ${isRefreshing ? styles.disabled : ''}`}
           aria-label="Slideshow Home"
           title="Slideshow Home"
           tabIndex={0}
@@ -137,7 +138,7 @@ function Settings() {
               onChange={handleInputChange}
             />
           </div>
-          <RefreshPhotos apiBaseUrl={apiBaseUrl} />
+          <RefreshPhotos apiBaseUrl={apiBaseUrl} setIsRefreshing={setIsRefreshing} />
         </form>
         <p className={styles.footer}>
           Made with ❤️ by{' '}

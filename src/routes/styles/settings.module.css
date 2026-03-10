@@ -13,6 +13,11 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 .hidden {

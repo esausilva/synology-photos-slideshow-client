@@ -1,10 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { API_DOWNLOAD_PHOTOS } from '~/constants/routes';
 import styles from './RefreshPhotos.module.css';
 
-export function RefreshPhotos({ apiBaseUrl }: { apiBaseUrl: string }) {
+export function RefreshPhotos({
+  apiBaseUrl,
+  setIsRefreshing,
+}: {
+  apiBaseUrl: string;
+  setIsRefreshing: (isRefreshing: boolean) => void;
+}) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsRefreshing(isLoading);
+    return () => setIsRefreshing(false);
+  }, [setIsRefreshing, isLoading]);
 
   const handleRefreshClick = async (): Promise<void> => {
     if (
