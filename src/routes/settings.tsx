@@ -10,6 +10,7 @@ import {
 } from '~/components/icons';
 import { RefreshPhotos } from '~/components/RefreshPhotos/RefreshPhotos';
 import { WEB_SETTINGS } from '~/constants/routes';
+import { useRefreshNavigationBlock } from '~/hooks/useRefreshNavigationBlock';
 import styles from '~/routes/styles/settings.module.css';
 import { getApiBaseUrlForClient } from '~/server-functions';
 import {
@@ -43,6 +44,8 @@ function Settings() {
   const apiBaseUrl = Route.useLoaderData();
   const [formState, setFormState] = useState(initialState);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  useRefreshNavigationBlock(isRefreshing);
 
   useEffect(() => {
     getSlideshowSettings()
@@ -138,7 +141,10 @@ function Settings() {
               onChange={handleInputChange}
             />
           </div>
-          <RefreshPhotos apiBaseUrl={apiBaseUrl} setIsRefreshing={setIsRefreshing} />
+          <RefreshPhotos
+            apiBaseUrl={apiBaseUrl}
+            setIsRefreshing={setIsRefreshing}
+          />
         </form>
         <p className={styles.footer}>
           Made with ❤️ by{' '}
