@@ -32,6 +32,8 @@ Table of Contents:
 
 The app persists settings in the browser's IndexedDB, so they will not be preserved across different devices. I might introduce a centralized database to persist settings across devices in the future.
 
+The app uses **SignalR** for real-time updates. When the Synology Photos Slideshow API finishes downloading new photos (in the Slideshow Settings page), a background process will kick off to convert the downloaded photos to WebP format. Upon completion, it will notify the client and refresh the slideshow without manual intervention.
+
 To get slideshow images for the first time or to refresh the images, press the "**Refresh Photos**" button on the settings page. This will delete the current set of images and fetch new ones from the Synology NAS.
 
 The app calls different endpoints from my [Synology Photos Slideshow API](https://github.com/esausilva/synology-photos-slideshow-api) to fetch, serve, and download the slideshow images. 
@@ -41,6 +43,8 @@ API's endpoints:
 - [Get Photo URLs](https://github.com/esausilva/synology-photos-slideshow-api#get-photo-slides): This endpoint returns a collection of slides with the following properties: relativeUrl, dateTaken, googleMapsLink, and location. 
 - [Download Photos](https://github.com/esausilva/synology-photos-slideshow-api#download-photos): This endpoint randomly selects, downloads, and converts the downloaded photos to WebP format.
 - [Bulk Delete Photos](https://github.com/esausilva/synology-photos-slideshow-api#bulk-delete-photos): This endpoint deletes photos from the slideshow folder and accepts the list of photo names to delete.
+
+The app also connects to a SignalR Hub at `/hubs/slideshow` to receive real-time updates.
 
 Refer to the API's documentation for more details.
 
@@ -52,6 +56,8 @@ Refer to the API's documentation for more details.
 | **Metadata Overlay****              | Displays photo details: date taken and location with Google Maps link.                                                |
 | **Randmom or Sequential Display**** | Allows for the slideshow to display the photos randomly or in order.                                                  |
 | **Interval in Seconds****           | Configure the interval delay between slides.                                                                          |
+| **Real-time Updates**               | Automatic slideshow refresh when the API finishes downloading new photos via SignalR integration.                     |
+| **Refresh Safeguards**              | Prevents accidental navigation or page closure while a photo refresh is in progress.                                  |
 
 **Configurable in the settings page.
 
