@@ -32,7 +32,7 @@ Table of Contents:
 
 The app persists settings in the browser's IndexedDB, so they will not be preserved across different devices. I might introduce a centralized database to persist settings across devices in the future.
 
-The app uses **SignalR** for real-time updates. When the Synology Photos Slideshow API finishes downloading new photos (in the Slideshow Settings page), a background process will kick off to convert the downloaded photos to WebP format. Upon completion, it will notify the client and refresh the slideshow without manual intervention.
+The app uses **SignalR** for real-time updates. When the Synology Photos Slideshow API finishes processing (converting to WebP) new photos or encounters an error, it notifies the client via a SignalR hub. This allows the slideshow to automatically refresh and display new photos without manual intervention.
 
 To get slideshow images for the first time or to refresh the images, press the "**Refresh Photos**" button on the settings page. This will delete the current set of images and fetch new ones from the Synology NAS.
 
@@ -56,7 +56,7 @@ Refer to the API's documentation for more details.
 | **Metadata Overlay****              | Displays photo details: date taken and location with Google Maps link.                                                |
 | **Randmom or Sequential Display**** | Allows for the slideshow to display the photos randomly or in order.                                                  |
 | **Interval in Seconds****           | Configure the interval delay between slides.                                                                          |
-| **Real-time Updates**               | Automatic slideshow refresh when the API finishes downloading new photos via SignalR integration.                     |
+| **Real-time Updates**               | Automatic slideshow refresh when the API finishes processing (converting to WebP new photos via SignalR integration.  |
 | **Refresh Safeguards**              | Prevents accidental navigation or page closure while a photo refresh is in progress.                                  |
 
 **Configurable in the settings page.
