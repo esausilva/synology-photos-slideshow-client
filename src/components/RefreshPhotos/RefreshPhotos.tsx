@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { API_DOWNLOAD_PHOTOS } from '~/constants/routes';
+import { httpRequest } from '~/utils/http';
 import styles from './RefreshPhotos.module.css';
 
 export function RefreshPhotos({
@@ -29,7 +30,7 @@ export function RefreshPhotos({
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${apiBaseUrl}${API_DOWNLOAD_PHOTOS}`);
+      const response = await httpRequest(`${apiBaseUrl}${API_DOWNLOAD_PHOTOS}`);
 
       if (response.status === 204) {
         toast(

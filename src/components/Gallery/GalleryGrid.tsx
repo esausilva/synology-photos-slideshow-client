@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { API_DELETE_PHOTOS } from '~/constants/routes';
+import { httpPostJson } from '~/utils/http';
 import { THUMBNAIL_POSTFIX } from './constants';
 import styles from './GalleryGrid.module.css';
 import { GalleryItem } from './GalleryItem';
@@ -74,13 +75,9 @@ export function GalleryGrid({
     setIsDeleting(true);
 
     try {
-      const response = await fetch(`${apiBaseUrl}${API_DELETE_PHOTOS}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          photoNames,
-          signalRConnectionId,
-        }),
+      const response = await httpPostJson(`${apiBaseUrl}${API_DELETE_PHOTOS}`, {
+        photoNames,
+        signalRConnectionId,
       });
 
       if (response.status >= 500) {
@@ -133,6 +130,10 @@ export function GalleryGrid({
           </div>
         </div>
       )}
+
+      <p className={styles.photoCount}>
+        Total photos in gallery: {localThumbnails.length}
+      </p>
 
       {localThumbnails.length === 0 ? (
         <p className={styles.emptyMessage}>

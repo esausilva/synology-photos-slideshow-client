@@ -4,6 +4,7 @@ import { IconTrash } from '~/components/icons/IconTrash';
 import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { API_DELETE_PHOTOS } from '~/constants/routes';
 import { useSlideshowMetadata } from '~/contexts/SlideshowMetadataContext';
+import { httpPostJson } from '~/utils/http';
 import styles from './DeletePhoto.module.css';
 
 interface DeletePhotoProps {
@@ -19,15 +20,9 @@ export function DeletePhoto({ slide, deleteSlide }: DeletePhotoProps) {
     const thumbnailName = toThumbnailName(photoName);
 
     try {
-      const response = await fetch(`${apiBaseUrl}${API_DELETE_PHOTOS}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          photoNames: [photoName, thumbnailName],
-          signalRConnectionId: signalRConnectionId,
-        }),
+      const response = await httpPostJson(`${apiBaseUrl}${API_DELETE_PHOTOS}`, {
+        photoNames: [photoName, thumbnailName],
+        signalRConnectionId: signalRConnectionId,
       });
 
       if (response.status >= 500) {

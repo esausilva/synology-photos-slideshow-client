@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start';
 import { API_GET_SLIDES, API_GET_THUMBNAILS } from '~/constants/routes';
+import { httpRequest } from '~/utils/http';
 
 export interface Slide {
   url: string;
@@ -15,7 +16,7 @@ interface SlideFromApi extends Slide {
 const getSlides = createServerFn({
   method: 'GET',
 }).handler(async (): Promise<Slide[]> => {
-  const res = await fetch(
+  const res = await httpRequest(
     `${process.env.SERVER__API_BASE_URL}${API_GET_SLIDES}`,
   );
 
@@ -38,7 +39,7 @@ const getSlides = createServerFn({
 const getThumbnails = createServerFn({
   method: 'GET',
 }).handler(async (): Promise<string[]> => {
-  const res = await fetch(
+  const res = await httpRequest(
     `${process.env.SERVER__API_BASE_URL}${API_GET_THUMBNAILS}`,
   );
 
