@@ -21,6 +21,8 @@ I have the app deployed and tested in Synology Container Manager, but it should 
 Table of Contents:
 
 - [Technical Details](#technical-details)
+- [Features](#features)
+- [Gallery Page](#gallery-page)
 - [Local Development](#local-development)
 - [Local Testing with Docker](#local-testing-with-docker)
 - [Deployment To Your Synology NAS Device](#deployment-to-your-synology-nas-device)
