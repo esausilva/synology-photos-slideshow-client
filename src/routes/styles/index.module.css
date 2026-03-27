@@ -9,9 +9,16 @@
   font-size: 1.2rem;
 }
 
-.settings-link {
+.nav-links {
   position: absolute;
   top: 1rem;
   right: 1rem;
   z-index: 10;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.nav-link {
+  display: flex;
 }

@@ -62,13 +62,17 @@ function Settings() {
           initializeDb()
             .then(() => setFormState({ ...initialState, isLoading: false }))
             .catch((error) => {
-              toast.error('Failed to initialize slideshow settings.');
+              toast.error('Failed to initialize slideshow settings.', {
+                autoClose: false,
+              } as const);
               console.error('Error initializing slideshow settings: ', error);
             });
         }
       })
       .catch((err) => {
-        toast.error('Failed to load settings.');
+        toast.error('Failed to load settings.', {
+          autoClose: false,
+        } as const);
         console.error('Failed to load settings:', err);
       });
   }, []);
@@ -90,7 +94,9 @@ function Settings() {
       await persistSettings(state);
       setFormState(state);
     } catch (err) {
-      toast.error('Failed to save settings.');
+      toast.error('Failed to save settings.', {
+        autoClose: false,
+      } as const);
       console.error('Failed to save settings:', err);
     }
   };

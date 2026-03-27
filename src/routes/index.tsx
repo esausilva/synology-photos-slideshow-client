@@ -1,7 +1,7 @@
 import { Await, createFileRoute, defer, Link } from '@tanstack/react-router';
 import { Suspense, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { IconSettings } from '~/components/icons';
+import { IconGallery, IconSettings } from '~/components/icons';
 import { HomeSkeleton } from '~/components/Slideshow/HomeSkeleton';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { WEB_HOME } from '~/constants/routes';
@@ -78,21 +78,34 @@ function Home() {
 
   useEffect(() => {
     if (errorMessage) {
-      toast.error(errorMessage);
+      toast.error(errorMessage, {
+        autoClose: false,
+      } as const);
     }
   }, [errorMessage]);
 
   return (
     <>
-      <Link
-        to="/settings"
-        className={styles.settingsLink}
-        aria-label="Slideshow Settings"
-        title="Slideshow Settings"
-        tabIndex={0}
-      >
-        <IconSettings />
-      </Link>
+      <div className={styles.navLinks}>
+        <Link
+          to="/gallery"
+          className={styles.navLink}
+          aria-label="Photo Gallery"
+          title="Photo Gallery"
+          tabIndex={0}
+        >
+          <IconGallery />
+        </Link>
+        <Link
+          to="/settings"
+          className={styles.navLink}
+          aria-label="Slideshow Settings"
+          title="Slideshow Settings"
+          tabIndex={0}
+        >
+          <IconSettings />
+        </Link>
+      </div>
       {errorMessage ? (
         <div className={styles.container}>
           <p>{errorMessage}</p>

@@ -1,0 +1,28 @@
+.container {
+  background: #d9d9d9;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #ffffff;
+  border-bottom: 1px solid #8a8a8a;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.home-link {
+  display: flex;
+}
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+}

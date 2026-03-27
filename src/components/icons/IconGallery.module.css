@@ -1,0 +1,10 @@
+.gallery-icon {
+  opacity: 0.2;
+  width: 2rem;
+  height: 2rem;
+  fill: #ffffff;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

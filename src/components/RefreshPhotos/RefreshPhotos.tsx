@@ -39,16 +39,22 @@ export function RefreshPhotos({
           </div>,
         );
       } else if (response.status === 503) {
-        toast.error('Unable to download photos due to timeouts.');
+        toast.error('Unable to download photos due to timeouts.', {
+          autoClose: false,
+        } as const);
         console.error(
           'API Error (503): Unable to download photos due to timeouts.',
         );
       } else {
-        toast.error('An unexpected error occurred.');
+        toast.error('An unexpected error occurred.', {
+          autoClose: false,
+        } as const);
         console.error(`API Error (${response.status}): ${response.statusText}`);
       }
     } catch (error) {
-      toast.error('Failed to refresh photos.');
+      toast.error('Failed to refresh photos.', {
+        autoClose: false,
+      } as const);
       console.error('Error refreshing photos:', error);
     } finally {
       setIsLoading(false);

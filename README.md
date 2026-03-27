@@ -40,26 +40,47 @@ The app calls different endpoints from my [Synology Photos Slideshow API](https:
 
 API's endpoints:
 
-- [Get Photo URLs](https://github.com/esausilva/synology-photos-slideshow-api#get-photo-slides): This endpoint returns a collection of slides with the following properties: relativeUrl, dateTaken, googleMapsLink, and location. 
+- [Get Photo URLs](https://github.com/esausilva/synology-photos-slideshow-api#get-photo-slides): This endpoint returns a collection of slides with the following properties: relativeUrl, dateTaken, googleMapsLink, and location.
+- [Get Thumbnails](https://github.com/esausilva/synology-photos-slideshow-api#get-thumbnails): This endpoint returns a list of relative URLs for thumbnail images used in the Gallery page.
 - [Download Photos](https://github.com/esausilva/synology-photos-slideshow-api#download-photos): This endpoint randomly selects, downloads, and converts the downloaded photos to WebP format.
 - [Bulk Delete Photos](https://github.com/esausilva/synology-photos-slideshow-api#bulk-delete-photos): This endpoint deletes photos from the slideshow folder and accepts the list of photo names to delete.
 
-The app also connects to a SignalR Hub at `/hubs/slideshow` to receive real-time updates.
+The app also connects to a SignalR Hub at `/hubs/slideshow` to receive real-time updates:
+
+| SignalR Event                | Behavior                                                                          |
+|:-----------------------------|:----------------------------------------------------------------------------------|
+| `RefreshSlideshow`           | Invalidates the router to reload slides (all pages).                              |
+| `PhotoProcessingError`       | Displays an error toast (all pages).                                              |
+| `RefreshGallery`             | Invalidates the router to reload thumbnails (only when on the `/gallery` page).   |
+| `ThumbnailsProcessingError`  | Displays an error toast (only when on the `/gallery` page).                       |
 
 Refer to the API's documentation for more details.
 
 ## Features
 
-| Feature                             | Description                                                                                                           |
-|:------------------------------------|:----------------------------------------------------------------------------------------------------------------------|
-| **Delete Button**                   | Adds a UI button to remove the currently displayed photo from the local rotation. The button is showed on slide hover |
-| **Metadata Overlay****              | Displays photo details: date taken and location with Google Maps link.                                                |
-| **Randmom or Sequential Display**** | Allows for the slideshow to display the photos randomly or in order.                                                  |
-| **Interval in Seconds****           | Configure the interval delay between slides.                                                                          |
-| **Real-time Updates**               | Automatic slideshow refresh when the API finishes processing (converting to WebP new photos via SignalR integration.  |
-| **Refresh Safeguards**              | Prevents accidental navigation or page closure while a photo refresh is in progress.                                  |
+| Feature                             | Description                                                                                                                                                    |
+|:------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Delete Button**                   | Adds a UI button to remove the currently displayed photo from the local rotation. The button is showed on slide hover.                                         |
+| **Metadata Overlay****              | Displays photo details: date taken and location with Google Maps link.                                                                                         |
+| **Randmom or Sequential Display**** | Allows for the slideshow to display the photos randomly or in order.                                                                                           |
+| **Interval in Seconds****           | Configure the interval delay between slides.                                                                                                                   |
+| **Real-time Updates**               | Automatic slideshow refresh when the API finishes processing (converting to WebP) new photos via SignalR integration.                                          |
+| **Refresh Safeguards**              | Prevents accidental navigation or page closure while a photo refresh is in progress.                                                                           |
+| **Gallery Page**                    | A dedicated page (`/gallery`) displaying all photos as thumbnails in a responsive grid. Select one or more photos and bulk-delete them with a single action.   |
 
 **Configurable in the settings page.
+
+### Gallery Page
+
+The Gallery page is accessible at `/gallery` or by clicking the gallery icon in the top-right corner of the slideshow.
+
+- **Thumbnail grid** — Displays all slideshow photos as thumbnails in a responsive CSS Grid layout.
+- **Full-size preview** — Click any thumbnail to open the full-size photo in a modal dialog.
+- **Multi-select** — Click the checkbox on any thumbnail to enter selection mode. Select one or more photos, then delete them all at once.
+- **Bulk delete** — Deletes both the full-size photo and its thumbnail from the server.
+- **Auto-refresh** — When the API finishes generating thumbnails, the gallery auto-refreshes via the `RefreshGallery` SignalR event (only when viewing the gallery page).
+
+The API automatically generates thumbnails after photo processing completes. If thumbnails are not yet available, the gallery will display a message and refresh once they are ready.
 
 ## Local Development
 
@@ -177,7 +198,7 @@ To support the API's [Future Enhancements](https://github.com/esausilva/synology
 | **Manual Delete Button** | Adds a UI button to remove the currently displayed photo from the local rotation.               | ✅       |
 | **Metadata Overlay**     | Displays photo details like date and location with potential Google Maps links.                 | ✅       |
 | **Download Settings**    | A configuration menu to set the number of photos to download.                                   |         |
-| **Gallery View**         | A new page displaying all photos in a gallery format and the ability to delete multiple photos. |         |
+| **Gallery View**         | A new page displaying all photos in a gallery format and the ability to delete multiple photos. | ✅       |
 
 What else? Will see...
 

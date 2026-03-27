@@ -6,10 +6,12 @@ import {
 import { useRouter } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
-import { SIGNALR_HUB } from '~/constants/routes';
+import { SIGNALR_HUB, WEB_GALLERY } from '~/constants/routes';
 
 const REFRESH_SLIDESHOW = 'RefreshSlideshow';
 const PHOTO_PROCESSING_ERROR = 'PhotoProcessingError';
+const REFRESH_GALLERY = 'RefreshGallery';
+const THUMBNAILS_PROCESSING_ERROR = 'ThumbnailsProcessingError';
 
 interface UseSlideshowSignalRProps {
   apiBaseUrl: string;
@@ -60,11 +62,31 @@ export function useSlideshowSignalR({
 
     const onError = (errorMessage: string) => {
       console.error('SignalR: Photo processing error:', errorMessage);
-      toast.error(errorMessage);
+      toast.error(errorMessage, {
+        autoClose: false,
+      } as const);
+    };
+
+    const onRefreshGallery = () => {
+      if (router.matchRoute({ to: WEB_GALLERY })) {
+        console.log('SignalR: Refreshing gallery...');
+        debouncedInvalidate();
+      }
+    };
+
+    const onThumbnailsError = (errorMessage: string) => {
+      if (router.matchRoute({ to: WEB_GALLERY })) {
+        console.error('SignalR: Thumbnails processing error:', errorMessage);
+        toast.error(errorMessage, {
+          autoClose: false,
+        } as const);
+      }
     };
 
     connection.on(REFRESH_SLIDESHOW, onRefresh);
     connection.on(PHOTO_PROCESSING_ERROR, onError);
+    connection.on(REFRESH_GALLERY, onRefreshGallery);
+    connection.on(THUMBNAILS_PROCESSING_ERROR, onThumbnailsError);
 
     async function startConnection() {
       try {
@@ -85,6 +107,8 @@ export function useSlideshowSignalR({
       // Explicitly remove listeners
       connection.off(REFRESH_SLIDESHOW);
       connection.off(PHOTO_PROCESSING_ERROR);
+      connection.off(REFRESH_GALLERY);
+      connection.off(THUMBNAILS_PROCESSING_ERROR);
 
       // Stop connection only if it's not already stopping/stopped
       if (connection.state !== HubConnectionState.Disconnected) {
@@ -95,7 +119,7 @@ export function useSlideshowSignalR({
       }
       setIsConnected(false);
     };
-  }, [apiBaseUrl, debouncedInvalidate]);
+  }, [apiBaseUrl, debouncedInvalidate, router.matchRoute]);
 
   return { isConnected, connectionId };
 }

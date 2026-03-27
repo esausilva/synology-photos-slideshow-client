@@ -1,11 +1,11 @@
 import { createServerFn } from '@tanstack/react-start';
-import { API_GET_SLIDES } from '~/constants/routes';
+import { API_GET_SLIDES, API_GET_THUMBNAILS } from '~/constants/routes';
 
 export interface Slide {
   url: string;
   dateTaken: Date;
   googleMapsLink: string;
-  location: string
+  location: string;
 }
 
 interface SlideFromApi extends Slide {
@@ -30,8 +30,27 @@ const getSlides = createServerFn({
       url: `${process.env.CLIENT__API_BASE_URL}${slide.relativeUrl}`,
       dateTaken: new Date(slide.dateTaken),
       googleMapsLink: slide.googleMapsLink,
-      location: slide.location
+      location: slide.location,
     }),
+  );
+});
+
+const getThumbnails = createServerFn({
+  method: 'GET',
+}).handler(async (): Promise<string[]> => {
+  const res = await fetch(
+    `${process.env.SERVER__API_BASE_URL}${API_GET_THUMBNAILS}`,
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch thumbnails');
+  }
+
+  const relativeUrls: string[] = await res.json();
+
+  return relativeUrls.map(
+    (relativeUrl: string) =>
+      `${process.env.CLIENT__API_BASE_URL}${relativeUrl}`,
   );
 });
 
@@ -45,4 +64,4 @@ const getApiBaseUrlForClient = createServerFn({ method: 'GET' }).handler(() => {
   return apiBaseUrl;
 });
 
-export { getSlides, getApiBaseUrlForClient };
+export { getSlides, getThumbnails, getApiBaseUrlForClient };
