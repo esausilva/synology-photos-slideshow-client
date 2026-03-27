@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import { browserslistToTargets } from 'lightningcss'
 import { patchCssModules } from 'vite-css-modules';
-import tsConfigPaths from 'vite-tsconfig-paths'
 import browserslist from 'browserslist'
 import viteReact from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite';
@@ -12,10 +11,10 @@ export default defineConfig({
     port: 3500,
     host: true,
   },
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
-    tsConfigPaths({
-      projects: ['./tsconfig.json'],
-    }),
     tanstackStart({
       srcDirectory: 'src',
     }),
