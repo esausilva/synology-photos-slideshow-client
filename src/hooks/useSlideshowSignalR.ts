@@ -5,7 +5,7 @@ import {
 } from '@microsoft/signalr';
 import { useRouter } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { SIGNALR_HUB, WEB_GALLERY } from '~/constants/routes';
 
 const REFRESH_SLIDESHOW = 'RefreshSlideshow';
@@ -62,9 +62,7 @@ export function useSlideshowSignalR({
 
     const onError = (errorMessage: string) => {
       console.error('SignalR: Photo processing error:', errorMessage);
-      toast.error(errorMessage, {
-        autoClose: false,
-      } as const);
+      showErrorToast(errorMessage);
     };
 
     const onRefreshGallery = () => {
@@ -77,9 +75,7 @@ export function useSlideshowSignalR({
     const onThumbnailsError = (errorMessage: string) => {
       if (router.matchRoute({ to: WEB_GALLERY })) {
         console.error('SignalR: Thumbnails processing error:', errorMessage);
-        toast.error(errorMessage, {
-          autoClose: false,
-        } as const);
+        showErrorToast(errorMessage);
       }
     };
 

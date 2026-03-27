@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { API_DELETE_PHOTOS } from '~/constants/routes';
 import { THUMBNAIL_POSTFIX } from './constants';
 import styles from './GalleryGrid.module.css';
@@ -83,9 +84,7 @@ export function GalleryGrid({
       });
 
       if (response.status >= 500) {
-        toast.error('Failed to delete selected photos.', {
-          autoClose: false,
-        } as const);
+        showErrorToast('Failed to delete selected photos.');
         console.error(`API Error (${response.status}): ${response.statusText}`);
         return;
       }
@@ -99,9 +98,7 @@ export function GalleryGrid({
       );
       clearSelection();
     } catch (error) {
-      toast.error('Failed to delete photos.', {
-        autoClose: false,
-      } as const);
+      showErrorToast('Failed to delete photos.');
       console.error('Error deleting photos:', error);
     } finally {
       setIsDeleting(false);

@@ -1,6 +1,7 @@
 import { Await, createFileRoute, defer, Link } from '@tanstack/react-router';
 import { Suspense, useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { IconGallery, IconSettings } from '~/components/icons';
 import { HomeSkeleton } from '~/components/Slideshow/HomeSkeleton';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
@@ -78,9 +79,7 @@ function Home() {
 
   useEffect(() => {
     if (errorMessage) {
-      toast.error(errorMessage, {
-        autoClose: false,
-      } as const);
+      showErrorToast(errorMessage);
     }
   }, [errorMessage]);
 

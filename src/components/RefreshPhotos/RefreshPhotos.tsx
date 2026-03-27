@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { API_DOWNLOAD_PHOTOS } from '~/constants/routes';
 import styles from './RefreshPhotos.module.css';
 
@@ -39,22 +40,16 @@ export function RefreshPhotos({
           </div>,
         );
       } else if (response.status === 503) {
-        toast.error('Unable to download photos due to timeouts.', {
-          autoClose: false,
-        } as const);
+        showErrorToast('Unable to download photos due to timeouts.');
         console.error(
           'API Error (503): Unable to download photos due to timeouts.',
         );
       } else {
-        toast.error('An unexpected error occurred.', {
-          autoClose: false,
-        } as const);
+        showErrorToast('An unexpected error occurred.');
         console.error(`API Error (${response.status}): ${response.statusText}`);
       }
     } catch (error) {
-      toast.error('Failed to refresh photos.', {
-        autoClose: false,
-      } as const);
+      showErrorToast('Failed to refresh photos.');
       console.error('Error refreshing photos:', error);
     } finally {
       setIsLoading(false);

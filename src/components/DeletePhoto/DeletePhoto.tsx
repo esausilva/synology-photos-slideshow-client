@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { THUMBNAIL_POSTFIX } from '~/components/Gallery/constants';
 import { IconTrash } from '~/components/icons/IconTrash';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { API_DELETE_PHOTOS } from '~/constants/routes';
 import { useSlideshowMetadata } from '~/contexts/SlideshowMetadataContext';
 import styles from './DeletePhoto.module.css';
@@ -30,9 +31,7 @@ export function DeletePhoto({ slide, deleteSlide }: DeletePhotoProps) {
       });
 
       if (response.status >= 500) {
-        toast.error('Failed to delete photo.', {
-          autoClose: false,
-        } as const);
+        showErrorToast('Failed to delete photo.');
         console.error(`API Error (${response.status}): ${response.statusText}`);
         return;
       }
@@ -40,9 +39,7 @@ export function DeletePhoto({ slide, deleteSlide }: DeletePhotoProps) {
       toast.success('Photo deleted successfully.');
       deleteSlide();
     } catch (error) {
-      toast.error('Failed to delete photo.', {
-        autoClose: false,
-      } as const);
+      showErrorToast('Failed to delete photo.');
       console.error('Error deleting photo:', error);
     }
   };

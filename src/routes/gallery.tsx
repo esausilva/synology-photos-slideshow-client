@@ -1,6 +1,7 @@
 import { Await, createFileRoute, defer, Link } from '@tanstack/react-router';
 import { Suspense, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { GalleryGrid } from '~/components/Gallery/GalleryGrid';
 import { GallerySkeleton } from '~/components/Gallery/GallerySkeleton';
 import { IconHome } from '~/components/icons';
@@ -50,9 +51,7 @@ function Gallery() {
 
   useEffect(() => {
     if (errorMessage) {
-      toast.error(errorMessage, {
-        closeOnClick: false,
-      } as const);
+      showErrorToast(errorMessage);
       console.error(errorMessage);
     }
   }, [errorMessage]);

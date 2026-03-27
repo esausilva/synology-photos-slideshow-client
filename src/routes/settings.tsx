@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import type * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import {
   IconHome,
   IconInterval,
@@ -62,17 +63,13 @@ function Settings() {
           initializeDb()
             .then(() => setFormState({ ...initialState, isLoading: false }))
             .catch((error) => {
-              toast.error('Failed to initialize slideshow settings.', {
-                autoClose: false,
-              } as const);
+              showErrorToast('Failed to initialize slideshow settings.');
               console.error('Error initializing slideshow settings: ', error);
             });
         }
       })
       .catch((err) => {
-        toast.error('Failed to load settings.', {
-          autoClose: false,
-        } as const);
+        showErrorToast('Failed to load settings.');
         console.error('Failed to load settings:', err);
       });
   }, []);
@@ -94,9 +91,7 @@ function Settings() {
       await persistSettings(state);
       setFormState(state);
     } catch (err) {
-      toast.error('Failed to save settings.', {
-        autoClose: false,
-      } as const);
+      showErrorToast('Failed to save settings.');
       console.error('Failed to save settings:', err);
     }
   };
