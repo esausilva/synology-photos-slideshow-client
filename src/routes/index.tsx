@@ -1,10 +1,9 @@
 import { Await, createFileRoute, defer, Link } from '@tanstack/react-router';
 import { Suspense, useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { IconGallery, IconSettings } from '~/components/icons';
 import { HomeSkeleton } from '~/components/Slideshow/HomeSkeleton';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { WEB_HOME } from '~/constants/routes';
 import { SlideshowMetadataProvider } from '~/contexts/SlideshowMetadataContext';
 import {
@@ -146,7 +145,6 @@ function Home() {
           </Await>
         </Suspense>
       )}
-      <ToastContainer position="top-center" />
     </>
   );
 }

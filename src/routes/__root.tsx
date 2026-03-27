@@ -9,6 +9,7 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import type { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import appCss from '~/styles/app.css?url';
 
@@ -81,6 +82,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         {children}
+        <ToastContainer position="top-center" />
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>

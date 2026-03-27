@@ -1,10 +1,9 @@
 import { Await, createFileRoute, defer, Link } from '@tanstack/react-router';
 import { Suspense, useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { GalleryGrid } from '~/components/Gallery/GalleryGrid';
 import { GallerySkeleton } from '~/components/Gallery/GallerySkeleton';
 import { IconHome } from '~/components/icons';
+import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { WEB_GALLERY } from '~/constants/routes';
 import {
   type UseSlideshowSignalRReturn,
@@ -57,39 +56,36 @@ function Gallery() {
   }, [errorMessage]);
 
   return (
-    <>
-      <div className={styles.container}>
-        <header className={styles.header}>
-          <h1 className={styles.title}>Gallery</h1>
-          <Link
-            to="/"
-            className={styles.homeLink}
-            aria-label="Slideshow Home"
-            title="Slideshow Home"
-            tabIndex={0}
-          >
-            <IconHome />
-          </Link>
-        </header>
-        {errorMessage ? (
-          <div className={styles.errorContainer}>
-            <p>{errorMessage}</p>
-          </div>
-        ) : (
-          <Suspense fallback={<GallerySkeleton delay={500} />}>
-            <Await promise={thumbnails}>
-              {(thumbnails) => (
-                <GalleryGrid
-                  thumbnails={thumbnails}
-                  apiBaseUrl={apiBaseUrl}
-                  signalRConnectionId={signalRConnectionId}
-                />
-              )}
-            </Await>
-          </Suspense>
-        )}
-      </div>
-      <ToastContainer position="top-center" />
-    </>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Gallery</h1>
+        <Link
+          to="/"
+          className={styles.homeLink}
+          aria-label="Slideshow Home"
+          title="Slideshow Home"
+          tabIndex={0}
+        >
+          <IconHome />
+        </Link>
+      </header>
+      {errorMessage ? (
+        <div className={styles.errorContainer}>
+          <p>{errorMessage}</p>
+        </div>
+      ) : (
+        <Suspense fallback={<GallerySkeleton delay={500} />}>
+          <Await promise={thumbnails}>
+            {(thumbnails) => (
+              <GalleryGrid
+                thumbnails={thumbnails}
+                apiBaseUrl={apiBaseUrl}
+                signalRConnectionId={signalRConnectionId}
+              />
+            )}
+          </Await>
+        </Suspense>
+      )}
+    </div>
   );
 }
