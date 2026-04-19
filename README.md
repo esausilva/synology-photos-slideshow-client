@@ -20,6 +20,7 @@ I have the app deployed and tested in Synology Container Manager, but it should 
 
 Table of Contents:
 
+- [Architecture](#architecture)
 - [Technical Details](#technical-details)
 - [Features](#features)
 - [Gallery Page](#gallery-page)
@@ -29,6 +30,10 @@ Table of Contents:
 - [Important !!!!!!!](#important)
 - [Future Enhancements](#future-enhancements)
 - [Giving Back](#giving-back)
+
+## Architecture
+
+For a detailed look at the system architecture, including the data flow between the React frontend, the Nitro SSR server, and the backend API, refer to the [Architecture Documentation](docs/architecture.md).
 
 ## Technical Details
 
