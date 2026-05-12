@@ -10,7 +10,7 @@ Frontend client for a Synology NAS photo slideshow application. Built with React
 
 ```bash
 pnpm install          # Install dependencies
-pnpm dev              # Dev server on port 3500
+pnpm dev              # Dev server on port 3500 (sets NODE_TLS_REJECT_UNAUTHORIZED=0)
 pnpm build            # Production build (Vite + tsc)
 pnpm start            # Run SSR production server (.output/server/index.mjs)
 
@@ -38,6 +38,11 @@ Route loader (browser)
 SignalR (browser, CLIENT__API_BASE_URL/hubs/slideshow)
   → RefreshSlideshow / RefreshGallery events
     → router.invalidate() (debounced 1s) to re-trigger loaders
+
+Favorites (automatic)
+  → Drop photos into the 'favorites' folder on the NAS
+    → API processes them and sends RefreshSlideshow signal
+      → Client automatically updates the slideshow
 ```
 
 ### Key Files
@@ -47,8 +52,9 @@ SignalR (browser, CLIENT__API_BASE_URL/hubs/slideshow)
 - `src/routes/index.tsx` — Slideshow page; deferred loader calls `getSlides()`
 - `src/routes/gallery.tsx` — Gallery page; deferred loader calls `getThumbnails()`
 - `src/routes/settings.tsx` — Settings page; triggers photo refresh
-- `src/server-functions/index.ts` — All `createServerFn()` definitions; only place `SERVER__API_BASE_URL` is used
+- `src/server-functions/index.ts` — All `createServerFn()` definitions (`getSlides`, `getThumbnails`, `getApiBaseUrlForClient`)
 - `src/hooks/useSlideshowSignalR.ts` — SignalR lifecycle, reconnect, event handling, returns `connectionId`
+- `src/hooks/useRefreshNavigationBlock.ts` — Prevents navigating away from the settings page while a refresh is in progress
 - `src/utils/data-access.ts` — IndexedDB helpers: `getSlideshowSettings()`, `upsertSlideshowSettings()`
 - `src/utils/http.ts` — `httpRequest()` and `httpPostJson()` wrappers around fetch
 - `src/contexts/` — `SlideshowMetadataContext` shares `apiBaseUrl` and `signalRConnectionId` down the tree
