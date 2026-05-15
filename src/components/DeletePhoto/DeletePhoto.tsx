@@ -1,5 +1,4 @@
 import { toast } from 'react-toastify';
-import { THUMBNAIL_POSTFIX } from '~/components/Gallery/constants';
 import { IconTrash } from '~/components/icons/IconTrash';
 import { showErrorToast } from '~/components/Toast/ErrorToast';
 import { API_DELETE_PHOTOS } from '~/constants/routes';
@@ -17,11 +16,10 @@ export function DeletePhoto({ slide, deleteSlide }: DeletePhotoProps) {
 
   const handleClick = async (): Promise<void> => {
     const photoName = extractPhotoName(slide) ?? 'no-photo.jpg';
-    const thumbnailName = toThumbnailName(photoName);
 
     try {
       const response = await httpPostJson(`${apiBaseUrl}${API_DELETE_PHOTOS}`, {
-        photoNames: [photoName, thumbnailName],
+        photoNames: [photoName],
         signalRConnectionId: signalRConnectionId,
       });
 
@@ -55,6 +53,3 @@ const extractPhotoName = (slideUrl: string): string | null => {
     return slideUrl.split('/').pop() ?? null;
   }
 };
-
-const toThumbnailName = (photoName: string): string =>
-  photoName.replace('.webp', `${THUMBNAIL_POSTFIX}.webp`);

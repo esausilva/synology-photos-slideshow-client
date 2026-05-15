@@ -66,10 +66,9 @@ export function GalleryGrid({
   const handleDelete = async (): Promise<void> => {
     if (selectedThumbnails.size === 0) return;
 
-    const photoNames = [...selectedThumbnails].flatMap((thumbnailUrl) => {
+    const photoNames = [...selectedThumbnails].map((thumbnailUrl) => {
       const thumbnailName = extractFileName(thumbnailUrl);
-      const fullSizeName = toFullSizeName(thumbnailName);
-      return [thumbnailName, fullSizeName];
+      return toFullSizeName(thumbnailName);
     });
 
     setIsDeleting(true);
