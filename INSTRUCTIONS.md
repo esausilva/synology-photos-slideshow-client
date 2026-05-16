@@ -22,6 +22,18 @@ Environment variables (`.env`):
 - `SERVER__API_BASE_URL` — backend API base URL used by server functions (SSR/Node.js context)
 - `CLIENT__API_BASE_URL` — backend API base URL used by the browser (SignalR, client-side requests)
 
+## Docker
+
+```bash
+# Local — run when developing/testing locally
+docker-compose -f docker-compose.yaml -f docker-compose.local.yaml build
+docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up -d
+
+# To deploy — run when pushing to Docker Hub
+docker-compose build
+docker push esausilva/synology.photos.slideshow.client:latest
+```
+
 ## Architecture
 
 **Stack**: TanStack Start (Vite + Nitro + React 19) with TanStack Router for file-based routing and SSR via server functions.
