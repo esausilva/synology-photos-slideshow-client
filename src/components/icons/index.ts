@@ -10,8 +10,8 @@ export {
   IconGallery,
   IconHome,
   IconInterval,
-  IconRandom,
-  IconSettings,
   IconMapMarker,
   IconOverlay,
+  IconRandom,
+  IconSettings,
 };

@@ -4,7 +4,6 @@ import { GalleryGrid } from '~/components/Gallery/GalleryGrid';
 import { GallerySkeleton } from '~/components/Gallery/GallerySkeleton';
 import { IconHome } from '~/components/icons';
 import { showErrorToast } from '~/components/Toast/ErrorToast';
-import { WEB_GALLERY } from '~/constants/routes';
 import {
   type UseSlideshowSignalRReturn,
   useSlideshowSignalR,
@@ -12,7 +11,7 @@ import {
 import styles from '~/routes/styles/gallery.module.css';
 import { getApiBaseUrlForClient, getThumbnails } from '~/server-functions';
 
-export const Route = createFileRoute(WEB_GALLERY)({
+export const Route = createFileRoute('/gallery')({
   component: Gallery,
   loader: async (): Promise<{
     thumbnails: Promise<string[]>;

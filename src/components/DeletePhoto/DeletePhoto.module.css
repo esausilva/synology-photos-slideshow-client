@@ -1,5 +1,5 @@
 .delete-button {
-  composes: delete-photo-button from '../Slideshow/Slideshow.module.css';
+  composes: delete-photo-button from "../Slideshow/Slideshow.module.css";
   cursor: pointer;
   background: none;
   border: none;

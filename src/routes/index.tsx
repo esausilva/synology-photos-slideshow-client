@@ -4,7 +4,6 @@ import { IconGallery, IconSettings } from '~/components/icons';
 import { HomeSkeleton } from '~/components/Slideshow/HomeSkeleton';
 import { Slideshow } from '~/components/Slideshow/Slideshow';
 import { showErrorToast } from '~/components/Toast/ErrorToast';
-import { WEB_HOME } from '~/constants/routes';
 import { SlideshowMetadataProvider } from '~/contexts/SlideshowMetadataContext';
 import {
   type UseSlideshowSignalRReturn,
@@ -20,7 +19,7 @@ import {
   seedSettings,
 } from '~/utils/data-access';
 
-export const Route = createFileRoute(WEB_HOME)({
+export const Route = createFileRoute('/')({
   component: Home,
   loader: async (): Promise<{
     slides: Promise<Slide[]>;

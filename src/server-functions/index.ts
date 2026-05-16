@@ -65,4 +65,4 @@ const getApiBaseUrlForClient = createServerFn({ method: 'GET' }).handler(() => {
   return apiBaseUrl;
 });
 
-export { getSlides, getThumbnails, getApiBaseUrlForClient };
+export { getApiBaseUrlForClient, getSlides, getThumbnails };

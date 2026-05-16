@@ -9,7 +9,6 @@ import {
 } from '~/components/icons';
 import { RefreshPhotos } from '~/components/RefreshPhotos/RefreshPhotos';
 import { showErrorToast } from '~/components/Toast/ErrorToast';
-import { WEB_SETTINGS } from '~/constants/routes';
 import { useRefreshNavigationBlock } from '~/hooks/useRefreshNavigationBlock';
 import styles from '~/routes/styles/settings.module.css';
 import { getApiBaseUrlForClient } from '~/server-functions';
@@ -21,7 +20,7 @@ import {
   upsertSlideshowSettings,
 } from '~/utils/data-access';
 
-export const Route = createFileRoute(WEB_SETTINGS)({
+export const Route = createFileRoute('/settings')({
   component: Settings,
   loader: async () => await getApiBaseUrlForClient(),
 });
