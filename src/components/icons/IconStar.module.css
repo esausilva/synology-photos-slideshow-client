@@ -1,0 +1,13 @@
+.star-icon {
+  width: 2rem;
+  height: 2rem;
+  fill: #fffb8f;
+
+  path {
+    stroke: #fffb8f;
+  }
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

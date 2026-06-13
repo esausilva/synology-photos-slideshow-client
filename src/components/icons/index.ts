@@ -5,6 +5,7 @@ import { IconMapMarker } from './IconMapMarker';
 import { IconOverlay } from './IconOverlay';
 import { IconRandom } from './IconRandom';
 import { IconSettings } from './IconSettings';
+import { IconStar } from './IconStar';
 
 export {
   IconGallery,
@@ -14,4 +15,5 @@ export {
   IconOverlay,
   IconRandom,
   IconSettings,
+  IconStar,
 };

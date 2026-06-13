@@ -10,6 +10,9 @@
   padding: 1rem;
   background: #ffffff;
   border-bottom: 1px solid #8a8a8a;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .title {

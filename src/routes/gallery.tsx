@@ -57,7 +57,7 @@ function Gallery() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Gallery</h1>
+        <h1 className={styles.title}>Synology Photos Slideshow Gallery</h1>
         <Link
           to="/"
           className={styles.homeLink}

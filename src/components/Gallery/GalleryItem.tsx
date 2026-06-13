@@ -1,3 +1,4 @@
+import { IconStar } from '../icons';
 import styles from './GalleryItem.module.css';
 
 interface GalleryItemProps {
@@ -6,6 +7,8 @@ interface GalleryItemProps {
   onImageClick: () => void;
   onToggleSelect: () => void;
 }
+
+const favoritesPath = 'favorites';
 
 export function GalleryItem({
   thumbnailUrl,
@@ -24,6 +27,11 @@ export function GalleryItem({
       >
         <div className={isSelected ? styles.checked : styles.unchecked} />
       </button>
+      {thumbnailUrl.includes(favoritesPath) && (
+        <div className={styles.starOverlay}>
+          <IconStar />
+        </div>
+      )}
       <button
         type="button"
         className={styles.imageButton}
