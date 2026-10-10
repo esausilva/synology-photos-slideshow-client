@@ -51,6 +51,7 @@ API's endpoints:
 - [Get Thumbnails](https://github.com/esausilva/synology-photos-slideshow-api#get-thumbnails): This endpoint returns a list of relative URLs for thumbnail images used in the Gallery page.
 - [Download Photos](https://github.com/esausilva/synology-photos-slideshow-api#download-photos): This endpoint randomly selects, downloads, and converts the downloaded photos to WebP format.
 - [Bulk Delete Photos](https://github.com/esausilva/synology-photos-slideshow-api#bulk-delete-photos): This endpoint deletes photos from the slideshow folder and accepts the list of photo names to delete.
+- [Toggle Favorite](https://github.com/esausilva/synology-photos-slideshow-api#toggle-favorite): This endpoint moves a photo and its thumbnail into or out of the protected favorites' folder.
 
 The app also connects to a SignalR Hub at `/hubs/slideshow` to receive real-time updates:
 
@@ -74,6 +75,7 @@ Refer to the API's documentation for more details.
 | **Real-time Updates**               | Automatic slideshow refresh when the API finishes processing (converting to WebP) new photos via SignalR integration.                                          |
 | **Refresh Safeguards**              | Prevents accidental navigation or page closure while a photo refresh is in progress.                                                                           |
 | **Gallery Page**                    | A dedicated page (`/gallery`) displaying all photos as thumbnails in a responsive grid. Select one or more photos and bulk-delete them with a single action.   |
+| **Favorites Star**                  | A star button on every gallery thumbnail that moves the photo into or out of the protected favorites folder on the server.                                    |
 
 **Configurable in the settings page.
 
@@ -85,6 +87,7 @@ The Gallery page is accessible at `/gallery` or by clicking the gallery icon in 
 - **Full-size preview** — Click any thumbnail to open the full-size photo in a modal dialog.
 - **Multi-select** — Click the checkbox on any thumbnail to enter selection mode. Select one or more photos, then delete them all at once.
 - **Bulk delete** — Deletes both the full-size photo and its thumbnail from the server.
+- **Favorite toggle** — Every thumbnail shows a star. An outlined star means the photo is not a favorite, and a filled star means it is in the protected `favorites` folder. Click the star to move the photo into or out of the `favorites` folder on the server. The star updates immediately, and other open galleries and slideshows refresh once the toggles settle.
 - **Auto-refresh** — When the API finishes generating thumbnails, the gallery auto-refreshes via the `RefreshGallery` SignalR event (only when viewing the gallery page).
 
 The API automatically generates thumbnails after photo processing completes. If thumbnails are not yet available, the gallery will display a message and refresh once they are ready.
@@ -206,6 +209,7 @@ To support the API's [Future Enhancements](https://github.com/esausilva/synology
 | **Metadata Overlay**     | Displays photo details like date and location with potential Google Maps links.                 | ✅       |
 | **Download Settings**    | A configuration menu to set the number of photos to download.                                   |         |
 | **Gallery View**         | A new page displaying all photos in a gallery format and the ability to delete multiple photos. | ✅       |
+| **Favorites Toggle**     | A star button in the gallery to move photos into or out of the protected favorites folder.      | ✅       |
 
 What else? Will see...
 

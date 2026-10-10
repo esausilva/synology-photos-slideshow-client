@@ -6,5 +6,6 @@ export const API_GET_SLIDES = '/photos/slides';
 export const API_GET_THUMBNAILS = '/photos/thumbnails';
 export const API_DOWNLOAD_PHOTOS = '/photos/download';
 export const API_DELETE_PHOTOS = '/photos/bulk-delete';
+export const API_TOGGLE_FAVORITE = '/photos/favorite';
 
 export const SIGNALR_HUB = '/hubs/slideshow';

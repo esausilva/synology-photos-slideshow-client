@@ -70,5 +70,13 @@
   top: 0.5rem;
   right: 0.5rem;
   z-index: 5;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.star-overlay:disabled {
+  cursor: progress;
 }

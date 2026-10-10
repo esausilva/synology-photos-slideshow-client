@@ -58,3 +58,4 @@ graph TD
 
 ### 5. Real-Time Updates
 - **SignalR**: The client listens for events like `RefreshSlideshow` and `RefreshGallery`. When received, the TanStack Router cache is invalidated, causing the loaders to refetch the latest data from the server.
+- **Requester exclusion**: The Gallery sends its SignalR connection ID with bulk-delete and favorite toggle requests, so the API does not send it a refresh for its own changes. The Gallery updates its own state from the API responses instead.

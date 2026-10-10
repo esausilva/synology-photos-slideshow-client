@@ -1,11 +1,15 @@
 import styles from './IconStar.module.css';
 
-export function IconStar() {
+interface IconStarProps {
+  isFilled?: boolean;
+}
+
+export function IconStar({ isFilled = true }: IconStarProps) {
   return (
     <svg
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={styles.starIcon}
+      className={`${styles.starIcon} ${!isFilled ? styles.outline : ''}`}
     >
       <title>Favorites</title>
       <path

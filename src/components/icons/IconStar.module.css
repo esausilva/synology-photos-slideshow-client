@@ -11,3 +11,7 @@
     opacity: 0.6;
   }
 }
+
+.outline {
+  fill: transparent;
+}

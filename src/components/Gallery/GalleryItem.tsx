@@ -6,15 +6,19 @@ interface GalleryItemProps {
   isSelected: boolean;
   onImageClick: () => void;
   onToggleSelect: () => void;
+  isFavorite: boolean;
+  isFavoritePending: boolean;
+  onToggleFavorite: () => void;
 }
-
-const favoritesPath = 'favorites';
 
 export function GalleryItem({
   thumbnailUrl,
   isSelected,
   onImageClick,
   onToggleSelect,
+  isFavorite,
+  isFavoritePending,
+  onToggleFavorite,
 }: GalleryItemProps) {
   return (
     <div className={`${styles.item} ${isSelected ? styles.selected : ''}`}>
@@ -27,11 +31,18 @@ export function GalleryItem({
       >
         <div className={isSelected ? styles.checked : styles.unchecked} />
       </button>
-      {thumbnailUrl.includes(favoritesPath) && (
-        <div className={styles.starOverlay}>
-          <IconStar />
-        </div>
-      )}
+
+      <button
+        type="button"
+        className={styles.starOverlay}
+        onClick={onToggleFavorite}
+        disabled={isFavoritePending}
+        aria-pressed={isFavorite}
+        aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+      >
+        <IconStar isFilled={isFavorite} />
+      </button>
+
       <button
         type="button"
         className={styles.imageButton}
