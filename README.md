@@ -26,7 +26,7 @@ Table of Contents:
 - [Gallery Page](#gallery-page)
 - [Local Development](#local-development)
 - [Local Testing with Docker](#local-testing-with-docker)
-- [Deployment To Your Synology NAS Device](#deployment-to-your-synology-nas-device)
+- [Deployment To Your Synology NAS Device](docs/deployment-to-your-synology-nas-device.md)
 - [Important !!!!!!!](#important)
 - [Future Enhancements](#future-enhancements)
 - [Giving Back](#giving-back)
@@ -139,59 +139,6 @@ Note: It would be a good idea to rename the image in both Docker compose files a
 The default port of the production build is `3000`, so the Docker Compose file will map that port to `3500`.
 
 The slideshow will be available at `http://localhost:3500`.
-
-## Deployment To Your Synology NAS Device
-
-Two options:
-
-1. Download the latest image from my Docker Hub Repo: [esausilva/synology.photos.slideshow.client](https://hub.docker.com/r/esausilva/synology.photos.slideshow.client).
-2. Build the image yourself and push it to your own Docker Hub repository. Following this route, you will need to rename the image to match your repository in the `docker-compose.yml` file.
-
-
-**For option 2:**
-
-Run the following command to build the image:
-
-```bash
-docker-compose build
-```
-
-This will take the default docker compose file, `docker-compose.yaml`, and build the image, skipping the local docker compose file, `docker-compose.local.yml`.
-
-Run the following command to push the image to your Docker Hub repository:
-
-```bash
-docker push [your-repo]/synology.photos.slideshow.client:latest
-```
-
-**For both options:**
-
-From Synology Container Manager, click on the "Registry" tab and search for the appropriate repository and image.
-
-Right-click on the image and select "Download this image".
-
-![Registry Search](resources/registry-search.jpg "Registry Search")
-
-Once the image is downloaded, you can create a container from it by going to the "Image" tab, then right-clicking on the image, and selecting "Run".
-
-![Synology Photos Slideshow Client Docker Image](resources/synology-photo-slideshow-client-docker-image.jpg "Synology Photos Slideshow Client Docker Image")
-
-From there, you can configure the container. In the first screen you will need to set the container name, I would suggest checking-off the "Enable auto-restart" option.
-
-On the second screen, configure the local (to the NAS) ports. Make sure you map the ports correctly to `3500:3000`. `3500` being the port on the NAS device, but you can choose whatever you want for this port.
-
-Finally, you need to configure the environment variables under the "Environment" heading.
-
-The environment variables will be as follows:
-
-| **Environment Variable** | **Value**                 |
-|--------------------------|---------------------------|
-| SERVER__API_BASE_URL     | http://[YOUR-NAS-IP]:5097 |
-| CLIENT__API_BASE_URL     | http://[YOUR-NAS-IP]:5097 |
-
-Make sure you replace `[YOUR-NAS-IP]` with the IP address of your Synology NAS.
-
-The slideshow will be available at `http://[YOUR-NAS-IP]:3500`.
 
 ## Important!!!!!!!
 
